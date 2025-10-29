@@ -1,6 +1,6 @@
 .nav-container {
 	width: 100vw;
-	height: 60px;
+	height: 10vh;
 	background-color: rgb(255, 255, 255);
 	color: white;
 	display: flex;
@@ -15,7 +15,7 @@
 
 .login-container {
 	width: 100vw;
-	height: 100vh;
+	height: 90vh;
 	background-color: rgb(206, 206, 206);
 	padding: 0;
 	margin: 0;
