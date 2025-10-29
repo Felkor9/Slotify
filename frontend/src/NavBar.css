@@ -1,0 +1,70 @@
+.nav-header {
+	color: black;
+	font-family: monospace;
+	margin-left: 20px;
+}
+
+/* --- Navbar --- */
+.navbar-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1rem 2rem;
+	background-color: #ffffff;
+	color: rgb(0, 0, 0);
+	position: relative;
+	z-index: 100;
+}
+
+.hamburger-icon {
+	cursor: pointer;
+	transition: transform 0.2s ease;
+}
+
+.hamburger-icon:hover {
+	transform: scale(1.1);
+}
+
+/* --- Fullscreen overlay menu --- */
+.ham-menu-overlay {
+	position: fixed;
+	top: 0;
+	right: 0;
+	width: 20vw;
+	height: 50vh;
+	background-color: rgba(0, 0, 0, 0.85);
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(-10px);
+	transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+	z-index: 99;
+	margin-right: 20px;
+}
+
+/* När menyn är aktiv */
+.ham-menu-overlay.show {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
+}
+
+.ham-menu-list {
+	list-style: none;
+	/* text-align: center; */
+	margin-top: 100px;
+}
+
+.ham-menu-list li {
+	color: white;
+	font-size: 1rem;
+	margin: 1rem 0;
+	cursor: pointer;
+	transition: color 0.2s;
+}
+
+.ham-menu-list li:hover {
+	color: #cf2121;
+}

@@ -1,13 +1,15 @@
 import "./App.css";
-import schedule from "./schedule";
+// import schedule from "./schedule";
+import LogIn from "./logIn.jsx";
+// import NavBar from "./NavBar.jsx";
 
 function App() {
-  return (
-    <>
-      <h1>Slotify</h1>
-      <schedule />
-    </>
-  );
+	return (
+		<>
+			{/* <NavBar></NavBar> */}
+			<LogIn></LogIn>
+		</>
+	);
 }
 
 export default App;
