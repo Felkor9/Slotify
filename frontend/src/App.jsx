@@ -7,8 +7,8 @@ function App() {
   return (
     <>
       {/* <NavBar></NavBar> */}
-      {/* <LogIn></LogIn> */}
-      <Schedule />
+      <LogIn></LogIn>
+      {/* <Schedule /> */}
     </>
   );
 }
