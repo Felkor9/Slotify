@@ -1,0 +1,16 @@
+/* Tar bort standardmarginaler/padding från hela sidan */
+html,
+body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	width: 100%;
+}
+
+/* Om du vill att ditt React-rot-element fyller hela sidan */
+#root {
+	min-height: 100vh;
+	min-width: 100vw;
+	margin: 0;
+	padding: 0;
+}
