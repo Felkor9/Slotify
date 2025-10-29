@@ -1,11 +1,11 @@
 import "./App.css";
-import schedule from "./schedule";
+import Schedule from "./schedule";
 
 function App() {
   return (
     <>
       <h1>Slotify</h1>
-      <schedule />
+      <Schedule />
     </>
   );
 }
