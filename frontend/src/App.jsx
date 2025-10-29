@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       {/* <NavBar></NavBar> */}
-      <LogIn></LogIn>
+      {/* <LogIn></LogIn> */}
       <Schedule />
     </>
   );
