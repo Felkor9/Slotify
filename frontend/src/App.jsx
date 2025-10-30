@@ -1,16 +1,26 @@
 import "./App.css";
-import Schedule from "./schedule";
-import LogIn from "./logIn.jsx";
-// import NavBar from "./NavBar.jsx";
+import NavBar from "./NavBar.jsx";
+import LoginView from "./views/LoginView.jsx";
+import ScheduleView from "./views/ScheduleView.jsx";
+import { createHashRouter, RouterProvider, Outlet } from "react-router-dom";
 
-function App() {
-  return (
-    <>
-      {/* <NavBar></NavBar> */}
-      <LogIn></LogIn>
-      {/* <Schedule /> */}
-    </>
-  );
+const router = createHashRouter([
+	{
+		element: (
+			<>
+				<NavBar />
+				<main>
+					<Outlet />
+				</main>
+			</>
+		),
+		children: [
+			{ index: true, element: <LoginView /> },
+			{ path: "schedule", element: <ScheduleView /> },
+		],
+	},
+]);
+
+export default function App() {
+	return <RouterProvider router={router} />;
 }
-
-export default App;

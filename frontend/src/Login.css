@@ -1,21 +1,6 @@
-.nav-container {
-	width: 100vw;
-	height: 10vh;
-	background-color: rgb(255, 255, 255);
-	color: white;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-family: monospace;
-	font-size: 20px;
-}
-.header {
-	color: black;
-}
-
 .login-container {
 	width: 100vw;
-	height: 90vh;
+	height: 100vh;
 	background-color: rgb(206, 206, 206);
 	padding: 0;
 	margin: 0;
@@ -40,6 +25,8 @@
 	gap: 10px;
 	box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
 	margin-top: 100px;
+	box-sizing: border-box;
+	padding: 20px;
 }
 
 .heading-slotify {

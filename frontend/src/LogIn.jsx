@@ -1,18 +1,14 @@
 import React from "react";
 import "./LogIn.css";
+import { Link } from "react-router-dom";
 
 function LogIn() {
 	return (
 		<>
-			<nav>
-				<div className="nav-container">
-					<h1 className="header">Slotify</h1>
-				</div>
-			</nav>
 			<div className="login-container">
 				<div className="form-div">
 					<h2 className="heading-slotify">Log In to Slotify</h2>
-					<form className="login-form">
+					<form className="login-form" onSubmit={(e) => e.preventDefault()}>
 						<div className="input-group">
 							<label htmlFor="username">Email:</label>
 							<input className="input-text" type="text" id="username" name="username" required />
@@ -28,7 +24,7 @@ function LogIn() {
 						<div className="btn-group">
 							<a href="#">Forgot Password?</a>
 							<button className="login-btn" type="submit">
-								Log In
+								<Link to={"/schedule"}>Log In</Link>
 							</button>
 						</div>
 						<div className="signup-group">
