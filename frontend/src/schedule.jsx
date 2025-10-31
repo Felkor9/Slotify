@@ -10,7 +10,34 @@ const Schedule = () => {
     spots.push({ nr: i + 1, isBooked: false });
   }
 
-  const handleBooking = (day, time) => {};
+  //* temporära användare tills vi har databas kopplat
+  const users = [
+    { id: 1, userName: "Felix", bookings: [] },
+    { id: 2, userName: "Ingo", bookings: [] },
+    { id: 3, userName: "Kristofer", bookings: [] },
+    { id: 4, userName: "Caspar", bookings: [] },
+    { id: 5, userName: "Hampus", bookings: [] },
+    { id: 6, userName: "Will", bookings: [] },
+  ];
+  const loggedInUserId = 1;
+
+  //* temporära tider att boka
+  const bookings = [];
+  for (const day of days) {
+    for (const slot of timeSlots) {
+      bookings.push({ day, time: slot, booked: [] });
+    }
+  }
+
+  // bokar in användar id på tid och dag
+  const handleBooking = (day, time) => {
+    const user = users.find((u) => u.id === loggedInUserId);
+    const booking = bookings.find((b) => b.day === day && b.time === time);
+    if (user && booking) {
+      booking.booked.push(user.id);
+    }
+    console.log(bookings);
+  };
 
   return (
     <>
@@ -37,7 +64,11 @@ const Schedule = () => {
               <td style={{ border: "1px solid" }}>{time}</td>
               {days.map((day) => {
                 return (
-                  <td key={day + time} style={{ border: "1px solid" }}>
+                  <td
+                    key={day + time}
+                    style={{ border: "1px solid", cursor: "pointer" }}
+                    onClick={() => handleBooking(day, time)}
+                  >
                     {spots.map((spot) => (
                       <div
                         key={spot.nr}
@@ -45,7 +76,6 @@ const Schedule = () => {
                           border: "1px solid rgb(191, 191, 191)",
                           backgroundColor: "#aaf5adff",
                         }}
-                        onClick={() => handleBooking(day, time)}
                       >
                         {spot.nr}
                       </div>
