@@ -8,7 +8,10 @@ function NavBar() {
 	return (
 		<nav>
 			<div className="navbar-container">
-				<h2 className="nav-header">Slotify</h2>
+				<Link to={"/"}>
+					<h2 className="nav-header">Slotify</h2>
+				</Link>
+
 				<img
 					className="hamburger-icon"
 					onClick={() => setIsHamMenuVisible(!isHamMenuVisible)}
@@ -21,7 +24,7 @@ function NavBar() {
 			<div className={`ham-menu-overlay ${isHamMenuVisible ? "show" : ""}`}>
 				<ul className="ham-menu-list">
 					<li>
-						<Link to="/">Create account</Link>
+						<Link to="/create-user">Create account</Link>
 					</li>
 					<li>
 						<Link to="/schedule">Schedule</Link>

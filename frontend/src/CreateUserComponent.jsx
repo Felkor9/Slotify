@@ -1,17 +1,18 @@
-import React from "react";
-import "./LogIn.css";
+import "./CreateUserComponent.css";
 import { Link } from "react-router-dom";
 
-function LogIn() {
+function CreateUserComponent() {
 	return (
 		<>
 			<div className="login-container">
 				<div className="form-div">
-					<h2 className="heading-slotify">Log In to Slotify</h2>
+					<h2 className="heading-slotify">Sign up to Slotify</h2>
 					<form className="login-form" onSubmit={(e) => e.preventDefault()}>
 						<div className="input-group">
-							<label htmlFor="username">Email:</label>
+							<label htmlFor="username">Name:</label>
 							<input className="input-text" type="text" id="username" name="username" required />
+							<label htmlFor="email">Email:</label>
+							<input className="input-text" type="text" id="email" name="email" required />
 							<label htmlFor="password">Password:</label>
 							<input
 								className="input-text"
@@ -20,18 +21,14 @@ function LogIn() {
 								name="password"
 								required
 							/>
+							<div className="terms-group">
+								<label htmlFor="agree">Agree terms of use and handling of GDPR</label>
+								<input type="checkbox" name="agree" id="agree" required className="check-btn" />
+							</div>
 						</div>
 						<div className="btn-group">
-							<a href="#">Forgot Password?</a>
 							<button className="login-btn" type="submit">
-								<Link to={"/schedule"}>Log In</Link>
-							</button>
-						</div>
-						<div className="signup-group">
-							<p>Do not have an account yet?</p>
-
-							<button className="signup-btn" type="button">
-								<Link to={"/create-user"}>Sign Up</Link>
+								<Link to={"/schedule"}>Sign up</Link>
 							</button>
 						</div>
 					</form>
@@ -40,5 +37,4 @@ function LogIn() {
 		</>
 	);
 }
-
-export default LogIn;
+export default CreateUserComponent;
