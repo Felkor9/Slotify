@@ -1,12 +1,12 @@
 import NavBar from "../NavBar.jsx";
-import Schedule from "../schedule.jsx";
+import Schedule from "../Schedule.jsx";
 
 function Second() {
-	return (
-		<>
-			<Schedule />
-		</>
-	);
+  return (
+    <>
+      <Schedule />
+    </>
+  );
 }
 
 export default Second;

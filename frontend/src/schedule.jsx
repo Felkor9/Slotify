@@ -6,37 +6,46 @@ const Schedule = () => {
   const [maxBookings, _setMaxBookings] = useState(6);
   const spots = [];
 
+  // en array för att generera slots på varje timeSlot
   for (let i = 0; i < maxBookings; i++) {
-    spots.push({ nr: i + 1, isBooked: false });
+    spots.push(i);
   }
 
   //* temporära användare tills vi har databas kopplat
   const users = [
-    { id: 1, userName: "Felix", bookings: [] },
-    { id: 2, userName: "Ingo", bookings: [] },
-    { id: 3, userName: "Kristofer", bookings: [] },
-    { id: 4, userName: "Caspar", bookings: [] },
-    { id: 5, userName: "Hampus", bookings: [] },
-    { id: 6, userName: "Will", bookings: [] },
+    { id: 1, userName: "Felix" },
+    { id: 2, userName: "Ingo" },
+    { id: 3, userName: "Kristofer" },
+    { id: 4, userName: "Caspar" },
+    { id: 5, userName: "Hampus" },
+    { id: 6, userName: "Will" },
   ];
   const loggedInUserId = 1;
 
   //* temporära tider att boka
-  const bookings = [];
-  for (const day of days) {
-    for (const slot of timeSlots) {
-      bookings.push({ day, time: slot, booked: [] });
+  const [bookings, setBookings] = useState(() => {
+    const array = [];
+    for (const day of days) {
+      for (const slot of timeSlots) {
+        array.push({ day, time: slot, booked: [] });
+      }
     }
-  }
+    return array;
+  });
 
   // bokar in användar id på tid och dag
   const handleBooking = (day, time) => {
-    const user = users.find((u) => u.id === loggedInUserId);
-    const booking = bookings.find((b) => b.day === day && b.time === time);
-    if (user && booking) {
-      booking.booked.push(user.id);
-    }
-    console.log(bookings);
+    setBookings((prev) =>
+      prev.map((slot) => {
+        if (slot.day === day && slot.time === time) {
+          // Inga dubbelbokningar
+          if (!slot.booked.includes(loggedInUserId)) {
+            return { ...slot, booked: [...slot.booked, loggedInUserId] };
+          }
+        }
+        return slot;
+      })
+    );
   };
 
   return (
@@ -50,9 +59,9 @@ const Schedule = () => {
       >
         <thead>
           <tr>
-            <th style={{ border: "1px solid" }}>Tid</th>
+            <th style={{ border: "1px solid", width: "10%" }}>Tid</th>
             {days.map((day) => (
-              <th key={day} style={{ border: "1px solid" }}>
+              <th key={day} style={{ border: "1px solid", width: "18%" }}>
                 {day}
               </th>
             ))}
@@ -63,23 +72,35 @@ const Schedule = () => {
             <tr key={time}>
               <td style={{ border: "1px solid" }}>{time}</td>
               {days.map((day) => {
+                const booking = bookings.find(
+                  (slot) => slot.day === day && slot.time === time
+                );
                 return (
                   <td
                     key={day + time}
                     style={{ border: "1px solid", cursor: "pointer" }}
                     onClick={() => handleBooking(day, time)}
                   >
-                    {spots.map((spot) => (
-                      <div
-                        key={spot.nr}
-                        style={{
-                          border: "1px solid rgb(191, 191, 191)",
-                          backgroundColor: "#aaf5adff",
-                        }}
-                      >
-                        {spot.nr}
-                      </div>
-                    ))}
+                    {spots.map((spot, idx) => {
+                      const bookedUser = booking?.booked[idx]
+                        ? users.find((u) => u.id === booking.booked[idx])
+                            ?.userName
+                        : null;
+                      return (
+                        <div
+                          key={idx}
+                          style={{
+                            border: "1px solid rgb(191, 191, 191)",
+                            backgroundColor: bookedUser
+                              ? "#f5b2aaff"
+                              : "#afffa5ff",
+                            height: "24px",
+                          }}
+                        >
+                          {bookedUser || ""}
+                        </div>
+                      );
+                    })}
                   </td>
                 );
               })}
