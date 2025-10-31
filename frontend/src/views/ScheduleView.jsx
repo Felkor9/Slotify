@@ -1,5 +1,5 @@
 import NavBar from "../NavBar.jsx";
-import Schedule from "../Schedule.jsx";
+import Schedule from "../schedule.jsx";
 
 function Second() {
   return (
