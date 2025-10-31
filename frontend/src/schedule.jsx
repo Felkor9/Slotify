@@ -38,10 +38,13 @@ const Schedule = () => {
     setBookings((prev) =>
       prev.map((slot) => {
         if (slot.day === day && slot.time === time) {
-          // Inga dubbelbokningar
-          if (!slot.booked.includes(loggedInUserId)) {
-            return { ...slot, booked: [...slot.booked, loggedInUserId] };
-          }
+          const isAlreadyBooked = slot.booked.includes(loggedInUserId);
+          return {
+            ...slot,
+            booked: isAlreadyBooked
+              ? slot.booked.filter((id) => id !== loggedInUserId)
+              : [...slot.booked, loggedInUserId],
+          };
         }
         return slot;
       })
