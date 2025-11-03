@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import GlobalContext from "./GlobalContext";
 
 const Schedule = () => {
   const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
@@ -20,7 +21,7 @@ const Schedule = () => {
     { id: 5, userName: "Hampus" },
     { id: 6, userName: "Will" },
   ];
-  const loggedInUserId = 1;
+  const { loggedInUserId } = useContext(GlobalContext);
 
   //* temporära tider att boka
   const [bookings, setBookings] = useState(() => {
