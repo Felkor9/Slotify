@@ -1,0 +1,53 @@
+//CREATE TABLE statements to set up the database schema
+CREATE TABLE "user"(
+id SERIAL PRIMARY KEY,
+username TEXT NOT NULL UNIQUE,
+email TEXT NOT NULL UNIQUE,
+isadmin BOOLEAN DEFAULT false,
+password TEXT NOT NULL
+);
+
+CREATE TABLE timeslots(
+id SERIAL PRIMARY KEY,
+startTime TIME,
+endTime TIME,
+maxBooking INTEGER
+);
+
+CREATE TABLE user_timeslots(
+id SERIAL PRIMARY KEY,
+user_id INTEGER REFERENCES "user"(id),
+timeslots_id INTEGER REFERENCES timeslots(id)
+);
+
+//some dummy data to test with
+INSERT INTO "user"(userName, email, isAdmin, password)VALUES('Korscao', 'felixkorshavn@gmail.com', true, 'hej123');
+
+INSERT INTO timeslots(startTime, EndTime, maxBooking)VALUES('10:00', '11:00', 6 );
+
+INSERT INTO timeslots (startTime, endTime, maxBooking)
+SELECT
+    day + make_interval(hours => start_hour) AS startTime,
+    day + make_interval(hours => start_hour + 4) AS endTime,
+    6 AS maxBooking
+FROM (
+    -- Skapa måndag till fredag
+    SELECT generate_series::date AS day
+    FROM generate_series('2025-11-03'::date, '2025-11-07'::date, interval '1 day')
+) AS days
+CROSS JOIN (
+    -- Skapa starttimmar med 4h intervall
+    SELECT generate_series AS start_hour
+    FROM generate_series(8, 16, 4)
+) AS hours
+ORDER BY day, start_hour;
+
+// Test deletes
+DROP TABLE "user";
+DROP TABLE timeslots;
+DROP TABLE user_timeslots;
+
+//SELECT statements to verify table contents
+SELECT * FROM timeslots;
+SELECT * FROM "user";
+SELECT * FROM user_timeslots;
