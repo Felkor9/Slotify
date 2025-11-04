@@ -21,7 +21,10 @@ timeslots_id INTEGER REFERENCES timeslots(id)
 );
 
 //some dummy data to test with
-INSERT INTO "user"(userName, email, isAdmin, password)VALUES('Korscao', 'felixkorshavn@gmail.com', true, 'hej123');
+INSERT INTO "user"(userName, email, isAdmin, password)
+VALUES('Korscao', 'korscao@mail.com', true, 'hej123'),
+('Caspar', 'caspar@gmail.com', false, 'qwerty'),
+('Ingo', 'ingoelgringo@gmail.com', false, 'password1');
 
 INSERT INTO timeslots(startTime, EndTime, maxBooking)VALUES('10:00', '11:00', 6 );
 

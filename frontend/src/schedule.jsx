@@ -12,16 +12,7 @@ const Schedule = () => {
     spots.push(i);
   }
 
-  //* temporära användare tills vi har databas kopplat
-  const users = [
-    { id: 1, userName: "Felix" },
-    { id: 2, userName: "Ingo" },
-    { id: 3, userName: "Kristofer" },
-    { id: 4, userName: "Caspar" },
-    { id: 5, userName: "Hampus" },
-    { id: 6, userName: "Will" },
-  ];
-  const { loggedInUserId } = useContext(GlobalContext);
+  const { loggedInUserId, users } = useContext(GlobalContext);
 
   //* temporära tider att boka
   const [bookings, setBookings] = useState(() => {
@@ -88,7 +79,7 @@ const Schedule = () => {
                     {spots.map((spot, idx) => {
                       const bookedUser = booking?.booked[idx]
                         ? users.find((u) => u.id === booking.booked[idx])
-                            ?.userName
+                            ?.username
                         : null;
                       return (
                         <div

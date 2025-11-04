@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NavBar from "./NavBar.jsx";
 import LoginView from "./views/LoginView.jsx";
 import ScheduleView from "./views/ScheduleView.jsx";
@@ -26,9 +26,21 @@ const router = createHashRouter([
 ]);
 
 export default function App() {
-  const [loggedInUserId, setLoggedInUserId] = useState(1);
+  const [loggedInUserId, setLoggedInUserId] = useState(3);
+  const [users, setUsers] = useState(null);
+
+  useEffect(() => {
+    fetch("/api/users")
+      .then((response) => response.json())
+      .then((data) => {
+        setUsers(data);
+      });
+  }, []);
+
   return (
-    <GlobalContext.Provider value={{ loggedInUserId, setLoggedInUserId }}>
+    <GlobalContext.Provider
+      value={{ loggedInUserId, setLoggedInUserId, users, setUsers }}
+    >
       <RouterProvider router={router} />
     </GlobalContext.Provider>
   );
