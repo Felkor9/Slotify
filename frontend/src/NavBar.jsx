@@ -1,9 +1,18 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./NavBar.css";
 import { Link } from "react-router-dom";
+import GlobalContext from "./GlobalContext";
 
 function NavBar() {
 	const [isHamMenuVisible, setIsHamMenuVisible] = useState(false);
+	const { loggedInUserId, users } = useContext(GlobalContext);
+	const [name, setName] = useState(null);
+
+	useEffect(() => {
+		if (users) {
+			setName(users.find((u) => u.id == loggedInUserId));
+		}
+	}, [users, loggedInUserId]);
 
 	return (
 		<nav>
@@ -11,6 +20,9 @@ function NavBar() {
 				<Link to={"/"}>
 					<h2 className="nav-header">Slotify</h2>
 				</Link>
+				<p>
+					<strong>Inloggad som:</strong> {name?.username}
+				</p>
 
 				<img
 					className="hamburger-icon"
