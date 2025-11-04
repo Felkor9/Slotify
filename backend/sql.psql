@@ -1,4 +1,7 @@
-//CREATE TABLE statements to set up the database schema
+// ------------------------------------- //
+// ----------- CREATE TABLE ------------//
+// ------------------------------------- //
+
 CREATE TABLE "user"(
 id SERIAL PRIMARY KEY,
 username TEXT NOT NULL UNIQUE,
@@ -7,50 +10,78 @@ isadmin BOOLEAN DEFAULT false,
 password TEXT NOT NULL
 );
 
+CREATE TABLE day(
+  id SERIAL PRIMARY KEY,
+  name TEXT NOT NULL UNIQUE
+);
+
 CREATE TABLE timeslots(
 id SERIAL PRIMARY KEY,
 startTime TIME,
-endTime TIME,
-maxBooking INTEGER
+endTime TIME
 );
 
-CREATE TABLE user_timeslots(
+CREATE TABLE seats(
+  id SERIAL PRIMARY KEY,
+  seatNumber INTEGER NOT NULL CHECK (seatNumber BETWEEN 1 AND 6)
+);
+
+CREATE TABLE bookings(
 id SERIAL PRIMARY KEY,
 user_id INTEGER REFERENCES "user"(id),
-timeslots_id INTEGER REFERENCES timeslots(id)
+day_id INTEGER REFERENCES day(id),
+timeslots_id INTEGER REFERENCES timeslots(id),
+seats_id INTEGER REFERENCES seats(id)
 );
 
-//some dummy data to test with
+
+// -------------------------------------- //
+// ----------- DUMMY DATA --------------- //
+// -------------------------------------- //
+
 INSERT INTO "user"(userName, email, isAdmin, password)
 VALUES('Korscao', 'korscao@mail.com', true, 'hej123'),
 ('Caspar', 'caspar@gmail.com', false, 'qwerty'),
-('Ingo', 'ingoelgringo@gmail.com', false, 'password1');
+('Ingo', 'ingoelgringo@gmail.com', false, 'password1'),
+('Will', 'willie@gmail.com', false, 'tiny'),
+('Hampus', 'hampus@gmail.com', false, 'bigH');
 
-INSERT INTO timeslots(startTime, EndTime, maxBooking)VALUES('10:00', '11:00', 6 );
+INSERT INTO day(name)
+VALUES ('Måndag'),
+('Tisdag'),
+('Onsdag'),
+('Torsdag'),
+('Fredag');
 
-INSERT INTO timeslots (startTime, endTime, maxBooking)
-SELECT
-    day + make_interval(hours => start_hour) AS startTime,
-    day + make_interval(hours => start_hour + 4) AS endTime,
-    6 AS maxBooking
-FROM (
-    -- Skapa måndag till fredag
-    SELECT generate_series::date AS day
-    FROM generate_series('2025-11-03'::date, '2025-11-07'::date, interval '1 day')
-) AS days
-CROSS JOIN (
-    -- Skapa starttimmar med 4h intervall
-    SELECT generate_series AS start_hour
-    FROM generate_series(8, 16, 4)
-) AS hours
-ORDER BY day, start_hour;
+INSERT INTO timeslots(startTime, EndTime )
+VALUES('09:00', '13:00'),
+('13:00', '17:00' ),
+('17:00', '21:00' );
 
-// Test deletes
+INSERT INTO seats (seatNumber)
+SELECT generate_series(1, 6);
+
+
+// --------------------------------- //
+// --------- DROP TABLES ----------- //
+// --------------------------------- //
+
+
 DROP TABLE "user";
+DROP TABLE day;
 DROP TABLE timeslots;
-DROP TABLE user_timeslots;
+DROP TABLE seats;
+DROP TABLE bookings;
+
+
+// --------------------------------- //
+// ----------- SELECT ------------- //
+// --------------------------------- //
+
 
 //SELECT statements to verify table contents
-SELECT * FROM timeslots;
 SELECT * FROM "user";
-SELECT * FROM user_timeslots;
+SELECT * FROM day;
+SELECT * FROM timeslots;
+SELECT * FROM seats;
+SELECT * FROM bookings;
