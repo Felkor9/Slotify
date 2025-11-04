@@ -8,40 +8,38 @@ import { createHashRouter, RouterProvider, Outlet } from "react-router-dom";
 import GlobalContext from "./GlobalContext";
 
 const router = createHashRouter([
-  {
-    element: (
-      <>
-        <NavBar />
-        <main>
-          <Outlet />
-        </main>
-      </>
-    ),
-    children: [
-      { index: true, element: <LoginView /> },
-      { path: "schedule", element: <ScheduleView /> },
-      { path: "create-user", element: <CreateUserView /> },
-    ],
-  },
+	{
+		element: (
+			<>
+				<NavBar />
+				<main>
+					<Outlet />
+				</main>
+			</>
+		),
+		children: [
+			{ index: true, element: <LoginView /> },
+			{ path: "schedule", element: <ScheduleView /> },
+			{ path: "create-user", element: <CreateUserView /> },
+		],
+	},
 ]);
 
 export default function App() {
-  const [loggedInUserId, setLoggedInUserId] = useState(3);
-  const [users, setUsers] = useState(null);
+	const [loggedInUserId, setLoggedInUserId] = useState(null);
+	const [users, setUsers] = useState([]);
 
-  useEffect(() => {
-    fetch("/api/users")
-      .then((response) => response.json())
-      .then((data) => {
-        setUsers(data);
-      });
-  }, []);
+	useEffect(() => {
+		fetch("/api/users")
+			.then((response) => response.json())
+			.then((data) => {
+				setUsers(data);
+			});
+	}, []);
 
-  return (
-    <GlobalContext.Provider
-      value={{ loggedInUserId, setLoggedInUserId, users, setUsers }}
-    >
-      <RouterProvider router={router} />
-    </GlobalContext.Provider>
-  );
+	return (
+		<GlobalContext.Provider value={{ loggedInUserId, setLoggedInUserId, users, setUsers }}>
+			<RouterProvider router={router} />
+		</GlobalContext.Provider>
+	);
 }
