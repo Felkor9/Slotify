@@ -1,12 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import "./NavBar.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import GlobalContext from "./GlobalContext";
 
 function NavBar() {
 	const [isHamMenuVisible, setIsHamMenuVisible] = useState(false);
 	const { loggedInUserId, users } = useContext(GlobalContext);
 	const [name, setName] = useState(null);
+
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (users) {
@@ -17,9 +19,12 @@ function NavBar() {
 	return (
 		<nav>
 			<div className="navbar-container">
-				<Link to={"/"}>
-					<h2 className="nav-header">Slotify</h2>
-				</Link>
+				<h2
+					className="nav-header"
+					onClick={() => (loggedInUserId ? navigate("/schedule") : navigate("/"))}>
+					Slotify
+				</h2>
+
 				<p>
 					<strong>Inloggad som:</strong> {name?.username}
 				</p>
@@ -41,7 +46,9 @@ function NavBar() {
 					<li>
 						<Link to="/schedule">Schedule</Link>
 					</li>
-					<li>Settings</li>
+					<li>
+						<Link to={"/settings"}>Settings</Link>
+					</li>
 					<li>Edit account</li>
 					<li>My bookings</li>
 				</ul>
