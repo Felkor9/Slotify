@@ -78,3 +78,16 @@
 .ham-menu-list li:hover {
 	color: #cf2121;
 }
+
+.admin-button {
+	background-color: #000000;
+	color: white;
+	padding: 8px 16px;
+	font-size: 0.9rem;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+}
+.admin-button:hover {
+	color: #287c2f;
+}

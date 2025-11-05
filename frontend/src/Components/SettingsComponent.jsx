@@ -6,6 +6,7 @@ function SettingsComponent() {
 	const [username, setUserName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [currentPassword, setCurrentPassword] = useState("");
 	const [isUpdateVisible, setUpdateVisible] = useState(false);
 
 	const { users } = useContext(GlobalContext); // Lista på användare
@@ -13,25 +14,21 @@ function SettingsComponent() {
 	const [user, setUser] = useState(null); // State för den aktuella användaren
 
 	useEffect(() => {
-		// Hitta användaren i users-listan baserat på loggedInUserId
-		const foundUser = users.find((u) => u.id === loggedInUserId);
+		console.log("Users:", users); // Se om users är tillgänglig
+		console.log("Logged In User ID:", loggedInUserId); // Se om den inloggade användarens ID är korrekt
 
-		// Om användaren finns i users, sätt den i state
-		if (foundUser) {
-			setUser(foundUser);
-		} else {
-			// Om användaren inte finns i `users`, hämta från API
-			fetch("/api/user")
-				.then((response) => response.json())
-				.then((data) => {
-					setUser(data); // Uppdatera användaren när datan har hämtats
-				})
-				.catch((error) => console.error("Error fetching user data:", error));
+		if (users && loggedInUserId) {
+			const foundUser = users.find((u) => u.id === Number(loggedInUserId));
+			console.log("Found user:", foundUser); // Här ser du om användaren hittas korrekt
+
+			if (foundUser) {
+				setUser(foundUser);
+			}
 		}
-	}, [users, loggedInUserId]); // Kör när `users` eller `loggedInUserId` ändras
+	}, [users, loggedInUserId]);
 
 	const handleUpdateClick = () => {
-		if (!email || !password) {
+		if (!email || !password || !currentPassword) {
 			alert("Please fill in all fields before updating!");
 			return;
 		}
@@ -40,7 +37,7 @@ function SettingsComponent() {
 
 	const handleUpdate = () => {
 		// Kontrollera att användaren finns
-		if (!user || !user.id) {
+		if (!users || !user.id) {
 			alert("No user data available.");
 			return;
 		}
@@ -49,7 +46,7 @@ function SettingsComponent() {
 		fetch(`/api/user/${user.id}`, {
 			method: "PUT",
 			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ username, email, password }),
+			body: JSON.stringify({ username, email, password, currentPassword }),
 		})
 			.then((response) => {
 				if (!response.ok) {
@@ -72,63 +69,76 @@ function SettingsComponent() {
 	return (
 		<>
 			<div className="settings-container">
-				<h1>Update your user-info</h1>
 				<div className="form-div-settings">
-					<div>
-						<p>Current information </p>
-						{/* Kontrollera om user finns innan vi försöker rendera user.id */}
-						{user ? (
-							user.id === loggedInUserId ? (
-								<div>
-									<p>Current User: {user.username}</p>
-									<p>Current Email: {user.email}</p>
+					<h1>Update your user-info</h1>
+					<div className="form-div-holder">
+						<div className="current-info">
+							<h2 className="heading-info">Current information </h2>
+							{/* Kontrollera om user finns innan vi försöker rendera user.id */}
+							{user ? (
+								<div className="info-div">
+									<p className="info-text">
+										<strong>Current User: </strong>
+										{user.username}
+									</p>
+									<p className="info-text">
+										<strong>Current Email: </strong>
+										{user.email}
+									</p>
 								</div>
 							) : (
 								<p>Loading user data...</p>
-							)
-						) : (
-							<p>Loading user data...</p>
-						)}
+							)}
+						</div>
+						<form className="login-form" onSubmit={(e) => e.preventDefault()}>
+							<div className="input-group">
+								<label htmlFor="username">Name:</label>
+								<input
+									className="input-text"
+									type="text"
+									id="username"
+									name="username"
+									value={username}
+									onChange={(e) => setUserName(e.target.value)}
+									required
+								/>
+								<label htmlFor="email">Email:</label>
+								<input
+									className="input-text"
+									value={email}
+									onChange={(e) => setEmail(e.target.value)}
+									type="email"
+									id="email"
+									name="email"
+									required
+								/>
+								<label htmlFor="currentPassword">Current Password:</label>
+								<input
+									className="input-text"
+									type="password"
+									id="currentPassword"
+									value={currentPassword}
+									onChange={(e) => setCurrentPassword(e.target.value)}
+									required
+								/>
+								<label htmlFor="password">New Password:</label>
+								<input
+									className="input-text"
+									type="password"
+									id="password"
+									name="password"
+									value={password}
+									onChange={(e) => setPassword(e.target.value)}
+									required
+								/>
+							</div>
+							<div className="btn-group">
+								<button className="login-btn" type="button" onClick={() => handleUpdateClick()}>
+									Update Credentials
+								</button>
+							</div>
+						</form>
 					</div>
-					<form className="login-form" onSubmit={(e) => e.preventDefault()}>
-						<div className="input-group">
-							<label htmlFor="username">Name:</label>
-							<input
-								className="input-text"
-								type="text"
-								id="username"
-								name="username"
-								value={username}
-								onChange={(e) => setUserName(e.target.value)}
-								required
-							/>
-							<label htmlFor="email">Email:</label>
-							<input
-								className="input-text"
-								value={email}
-								onChange={(e) => setEmail(e.target.value)}
-								type="email"
-								id="email"
-								name="email"
-								required
-							/>
-							<label htmlFor="password">Password:</label>
-							<input
-								className="input-text"
-								type="password"
-								id="password"
-								name="password"
-								value={password}
-								onChange={(e) => setPassword(e.target.value)}
-								required
-							/>
-						</div>
-						<div className="btn-group">
-							<button className="login-btn" type="button" onClick={() => handleUpdateClick()}>
-								Update Credentials
-							</button>
-						</div>
-					</form>
 				</div>
 			</div>
 			{isUpdateVisible && (

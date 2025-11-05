@@ -1,0 +1,108 @@
+/* Grundläggande layout och färger */
+.admin-container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 20px;
+	font-family: "Arial", sans-serif;
+	background-color: #f8f9fa;
+}
+
+h1 {
+	color: #333;
+	font-size: 2.5em;
+	margin-bottom: 10px;
+}
+
+p {
+	color: #666;
+	font-size: 1.2em;
+	margin-bottom: 20px;
+}
+
+.admin-sections {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+}
+
+/* Användarkort */
+.user-div {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+	width: 100%;
+}
+
+.user-card {
+	background-color: white;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	padding: 15px;
+	width: calc(33% - 20px);
+	box-sizing: border-box;
+}
+
+.user-card .user-info {
+	margin-bottom: 15px;
+}
+
+.user-card .user-actions {
+	text-align: right;
+}
+
+.checkbox-container {
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+	color: #170e92a2;
+}
+
+.checkbox-container input[type="checkbox"] {
+	display: block;
+	cursor: pointer;
+}
+
+.checkbox-container .checkbox-custom {
+	width: 18px;
+	height: 18px;
+	border: 2px solid #22802f;
+	border-radius: 3px;
+	margin-left: 10px;
+	position: relative;
+}
+
+.update-confirmation {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.4);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	backdrop-filter: blur(4px);
+}
+.holder-confirmation {
+	background-color: #fff;
+	border-radius: 12px;
+	padding: 40px;
+	text-align: center;
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+	width: 100%;
+	max-width: 420px;
+	animation: fadeIn 0.3s ease-out;
+}
+
+.conf-btn {
+	background-color: #000000;
+	color: #fff;
+	padding: 10px 20px;
+	font-size: 1rem;
+	font-weight: 500;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: background-color 0.3s ease, transform 0.3s ease;
+	margin: 0 10px;
+}
