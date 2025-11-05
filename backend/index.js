@@ -108,6 +108,35 @@ app.get("/api/seats", async (_request, response) => {
   response.send(rows);
 });
 
+app.put(`/api/user/:id`, async (req, res) => {
+	try {
+		const { id } = req.params;
+		const { username, email, password } = req.body;
+
+		const result = await client.query(
+			'UPDATE "user" SET username = $1, email = $2, password = $3 WHERE id = $4 RETURNING *',
+			[username, email, password, id]
+		);
+		const user = result.rows[0];
+
+		res.status(200).json({
+			message: "Updated successfully",
+			user: {
+				id: user.id,
+				username: user.username,
+				email: user.email,
+				isadmin: user.isadmin,
+			},
+		});
+	} catch (err) {
+		console.error("Could not update credentials", err.message);
+		res.status(500).json({
+			message: "There was an error updating the user information",
+			error: err.message,
+		});
+	}
+});
+
 app.use(express.static(path.join(path.resolve(), "dist")));
 
 app.listen(3000, () => {

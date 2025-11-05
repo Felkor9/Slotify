@@ -12,16 +12,18 @@ password TEXT NOT NULL
 
 CREATE TABLE day(
   id SERIAL PRIMARY KEY,
-  name TEXT NOT NULL UNIQUE
+  name TEXT NOT NULL UNIQUE,
+  timeslots_id INTEGER REFERENCES timeslots(id)
 );
 
 CREATE TABLE timeslots(
 id SERIAL PRIMARY KEY,
 startTime TIME,
-endTime TIME
+endTime TIME,
+seats_id INTEGER REFERENCES seats(id)
 );
 
-SELECT (name, startTime, endTime) FROM day AND timeslots;
+alter table day column timeslots_id REFERENCES timeslots(id)
 
 CREATE TABLE seats(
   id SERIAL PRIMARY KEY,
@@ -88,3 +90,11 @@ SELECT * FROM day;
 SELECT * FROM timeslots;
 SELECT * FROM seats;
 SELECT * FROM bookings;
+
+SELECT
+    d.name AS day_name,
+    t.startTime,
+    t.endTime
+FROM day d
+CROSS JOIN timeslots t
+ORDER BY d.id, t.id;

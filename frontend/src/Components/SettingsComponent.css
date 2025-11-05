@@ -1,0 +1,113 @@
+.settings-container {
+	width: 100vw;
+	height: 100vh;
+	background-color: rgb(206, 206, 206);
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.form-div-settings {
+	max-height: 70%;
+	min-height: 50%;
+	background-color: white;
+	border: solid 2px black;
+	border-radius: 10px;
+	max-width: 50%;
+	min-width: 20%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+	margin-top: 100px;
+	box-sizing: border-box;
+	padding: 20px;
+}
+
+.input-text {
+	width: 250px;
+	height: 30px;
+	border: solid 1px gray;
+	border-radius: 5px;
+	padding: 3px;
+	background-color: #f9f9f9;
+}
+
+label {
+	align-self: flex-start;
+}
+
+.login-btn {
+	width: 100%;
+	height: 35px;
+	border: none;
+	border-radius: 5px;
+	background-color: #000000;
+	color: white;
+	font-weight: bold;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	align-self: center;
+}
+
+.module-update {
+	position: fixed; /* täcker hela skärmen */
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.6); /* mörk transparent overlay */
+	backdrop-filter: blur(5px); /* suddig bakgrund */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 999; /* ovanför allt annat */
+	opacity: 0;
+	pointer-events: none; /* inte klickbar när hidden */
+	transition: all 0.3s ease;
+}
+
+.module-update.show {
+	opacity: 1;
+	pointer-events: auto; /* gör den klickbar när synlig */
+}
+
+.module-update-content {
+	background-color: rgba(30, 30, 30, 0.9); /* mörk box för innehåll */
+	padding: 2rem;
+	border-radius: 12px;
+	text-align: center;
+	color: #fff;
+	max-width: 400px;
+	width: 90%;
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+	display: flex;
+	flex-direction: column;
+}
+
+.header-update {
+	font-size: 1.2rem;
+	font-weight: 600;
+	margin-bottom: 1.5rem;
+}
+
+.update-btn {
+	padding: 0.6rem 1.5rem;
+	font-size: 1rem;
+	background-color: #1db954;
+	color: white;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.update-btn:hover {
+	background-color: #17a74a;
+	transform: scale(1.05);
+}

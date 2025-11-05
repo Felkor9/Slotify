@@ -1,13 +1,33 @@
 .login-container {
 	width: 100vw;
 	height: 100vh;
-	background-color: rgb(206, 206, 206);
+	background-color: rgba(119, 119, 119, 0.256);
 	padding: 0;
 	margin: 0;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: center;
+	position: relative;
+	z-index: 0;
+}
+
+.header-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover; /* för att bilden inte ska förvrängas */
+	position: absolute;
+	opacity: 0.5; /* istället för backdrop-filter */
+}
+.overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.532); /* mörk overlay */
+	backdrop-filter: blur(4px); /* lägger på blur */
+	z-index: 1;
 }
 
 .form-div {
@@ -27,6 +47,8 @@
 	margin-top: 100px;
 	box-sizing: border-box;
 	padding: 20px;
+	z-index: 100;
+	position: relative;
 }
 
 .heading-slotify {

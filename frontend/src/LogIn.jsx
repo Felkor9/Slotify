@@ -15,9 +15,7 @@ function LogIn() {
 			.then((data) => console.log(data));
 	}, []);
 
-	const handleLogIn = async (e) => {
-		e.preventDefault();
-
+	const handleLogIn = async () => {
 		try {
 			const response = await fetch("/api/login", {
 				method: "POST",
@@ -29,6 +27,8 @@ function LogIn() {
 			if (response.ok) {
 				console.log(data);
 				setLoggedInUserId(data.user.id);
+				localStorage.setItem("loggedInUserId", data.user.id);
+
 				navigate("/schedule");
 			} else {
 				alert(data.error);
@@ -41,6 +41,8 @@ function LogIn() {
 	return (
 		<>
 			<div className="login-container">
+				<img src="/header.png" alt="" className="header-img" />
+				<div className="overlay"></div>
 				<div className="form-div">
 					<h2 className="heading-slotify">Log In to Slotify</h2>
 					<form className="login-form" onSubmit={(e) => e.preventDefault()}>
@@ -68,7 +70,7 @@ function LogIn() {
 						</div>
 						<div className="btn-group">
 							<a href="#">Forgot Password?</a>
-							<button className="login-btn" type="submit" onClick={handleLogIn}>
+							<button className="login-btn" type="submit" onClick={() => handleLogIn()}>
 								Log In
 							</button>
 						</div>
