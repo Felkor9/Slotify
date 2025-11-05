@@ -28,7 +28,9 @@ const router = createHashRouter([
 ]);
 
 export default function App() {
-	const [loggedInUserId, setLoggedInUserId] = useState(null);
+	const [loggedInUserId, setLoggedInUserId] = useState(
+		localStorage.getItem("loggedInUserId") || null
+	);
 	const [users, setUsers] = useState([]);
 
 	useEffect(() => {

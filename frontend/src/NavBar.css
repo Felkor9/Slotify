@@ -26,11 +26,21 @@
 	transform: scale(1.1);
 }
 
+.link {
+	text-decoration: none;
+	color: white;
+	font-size: large;
+}
+.link:hover {
+	color: #419410;
+	font-size: 25px;
+}
+
 .ham-menu-overlay {
 	position: fixed;
 	top: 0;
 	right: 0;
-	width: 20vw;
+	width: 40rem;
 	height: 50vh;
 	background-color: rgba(0, 0, 0, 0.85);
 	display: flex;

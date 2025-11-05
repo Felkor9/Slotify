@@ -5,7 +5,7 @@ import GlobalContext from "./GlobalContext";
 
 function NavBar() {
 	const [isHamMenuVisible, setIsHamMenuVisible] = useState(false);
-	const { loggedInUserId, users } = useContext(GlobalContext);
+	const { loggedInUserId, setLoggedInUserId, users } = useContext(GlobalContext);
 	const [name, setName] = useState(null);
 
 	const navigate = useNavigate();
@@ -15,6 +15,12 @@ function NavBar() {
 			setName(users.find((u) => u.id == loggedInUserId));
 		}
 	}, [users, loggedInUserId]);
+
+	function handleLogout() {
+		localStorage.removeItem("loggedInUserId");
+		setLoggedInUserId(null);
+		setIsHamMenuVisible(false);
+	}
 
 	return (
 		<nav>
@@ -41,15 +47,25 @@ function NavBar() {
 			<div className={`ham-menu-overlay ${isHamMenuVisible ? "show" : ""}`}>
 				<ul className="ham-menu-list">
 					<li>
-						<Link to="/create-user">Create account</Link>
+						<Link className="link" to="/create-user">
+							Create account
+						</Link>
 					</li>
 					<li>
-						<Link to="/schedule">Schedule</Link>
+						<Link className="link" to="/schedule">
+							Schedule
+						</Link>
 					</li>
 					<li>
-						<Link to={"/settings"}>Settings</Link>
+						<Link className="link" to={"/settings"}>
+							Settings
+						</Link>
 					</li>
-					<li>Edit account</li>
+					<li>
+						<Link className="link" to="/" onClick={() => handleLogout()}>
+							Log Out
+						</Link>
+					</li>
 					<li>My bookings</li>
 				</ul>
 			</div>

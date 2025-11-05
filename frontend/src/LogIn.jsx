@@ -27,6 +27,8 @@ function LogIn() {
 			if (response.ok) {
 				console.log(data);
 				setLoggedInUserId(data.user.id);
+				localStorage.setItem("loggedInUserId", data.user.id);
+
 				navigate("/schedule");
 			} else {
 				alert(data.error);

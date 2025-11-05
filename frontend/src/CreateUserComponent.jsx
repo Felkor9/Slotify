@@ -1,8 +1,9 @@
 import "./CreateUserComponent.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 function CreateUserComponent() {
+	const navigate = useNavigate();
 	const [username, setUserName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -31,6 +32,7 @@ function CreateUserComponent() {
 			setEmail("");
 			setPassword("");
 			setError(null);
+			navigate("/login");
 		} catch (err) {
 			setError(err.message);
 		}
