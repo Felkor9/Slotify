@@ -38,18 +38,6 @@ const Schedule = () => {
   console.log("users:,", users);
   console.log("bookings:", bookings);
 
-  //* temporära tider att boka
-  // const [bookings, setBookings] = useState(() => {
-  //   const array = [];
-  //   for (const day of days) {
-  //     for (const slot of timeSlots) {
-  //       array.push({ day.name, time: slot, booked: [] });
-  //     }
-  //   }
-  //   return array;
-  // });
-
-  // bokar in användar id på tid och dag
   const handleBooking = async (dayid, timeslotid, seatid) => {
     try {
       const userid = Number(loggedInUserId);
