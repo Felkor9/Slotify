@@ -133,15 +133,6 @@ app.post("/api/bookings", async (_request, response) => {
 });
 
 app.put(`/api/user/:id`, async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { username, email, password } = req.body;
-
-    const result = await client.query(
-      'UPDATE "user" SET username = $1, email = $2, password = $3 WHERE id = $4 RETURNING *',
-      [username, email, password, id]
-    );
-    const user = result.rows[0];
 	try {
 		const { id } = req.params;
 		const { username, email, password, currentPassword } = req.body; // Lägg till currentPassword för verifiering av gammalt lösenord
