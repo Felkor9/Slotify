@@ -1,113 +1,213 @@
+/* Grundläggande stil för hela settings-komponenten */
 .settings-container {
-	width: 100vw;
-	height: 100vh;
-	background-color: rgb(206, 206, 206);
-	padding: 0;
-	margin: 0;
 	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	align-items: center;
-}
-
-.form-div-settings {
-	max-height: 70%;
-	min-height: 50%;
-	background-color: white;
-	border: solid 2px black;
-	border-radius: 10px;
-	max-width: 50%;
-	min-width: 20%;
-	display: flex;
-	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-	gap: 10px;
-	box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
-	margin-top: 100px;
+	min-height: 100vh;
+	background: #f7f8fc; /* Mjukare bakgrundsfärg */
+	padding: 30px;
+	font-family: "Roboto", sans-serif; /* Ett mer modernt typsnitt */
+}
+
+/* Formulärbehållare */
+.form-div-settings {
+	background-color: #fff;
+	border-radius: 16px;
+	box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+	width: 100%;
+	max-width: 500px;
+	padding: 40px;
 	box-sizing: border-box;
-	padding: 20px;
+}
+
+.form-div-holder {
+	margin-bottom: 30px;
+	width: 100%;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+/* Rubrik på sidan */
+h1 {
+	font-size: 2rem;
+	font-weight: 600;
+	color: #333;
+	margin-bottom: 30px;
+	text-align: center;
+	letter-spacing: 1px;
+}
+
+/* Sektion för nuvarande användarinformation */
+.heading-info {
+	font-size: 1.4rem;
+	font-weight: 500;
+	color: #444;
+	margin-bottom: 12px;
+	border-bottom: 2px solid #f1f1f1;
+	padding-bottom: 10px;
+}
+
+/* Information om användare */
+.info-div {
+	margin-top: 15px;
+}
+
+.info-text {
+	font-size: 1.1rem;
+	color: #555;
+	margin-bottom: 12px;
+	line-height: 1.6;
+}
+
+/* Inputfält */
+.input-group {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	margin-bottom: 25px;
 }
 
 .input-text {
-	width: 250px;
-	height: 30px;
-	border: solid 1px gray;
-	border-radius: 5px;
-	padding: 3px;
+	border: 2px solid #ddd;
+	border-radius: 8px;
+	padding: 12px 15px;
+	font-size: 1rem;
+	margin-top: 8px;
+	transition: border-color 0.3s ease, box-shadow 0.3s ease;
 	background-color: #f9f9f9;
 }
 
-label {
-	align-self: flex-start;
+.input-text:focus {
+	border-color: #4a90e2;
+	box-shadow: 0 0 8px rgba(74, 144, 226, 0.5);
+	outline: none;
 }
 
-.login-btn {
-	width: 100%;
-	height: 35px;
-	border: none;
-	border-radius: 5px;
-	background-color: #000000;
-	color: white;
-	font-weight: bold;
-	cursor: pointer;
-	transition: all 0.3s ease;
-	align-self: center;
-}
-
-.module-update {
-	position: fixed; /* täcker hela skärmen */
-	top: 0;
-	left: 0;
-	width: 100vw;
-	height: 100vh;
-	background-color: rgba(0, 0, 0, 0.6); /* mörk transparent overlay */
-	backdrop-filter: blur(5px); /* suddig bakgrund */
+.btn-group {
 	display: flex;
 	justify-content: center;
-	align-items: center;
-	z-index: 999; /* ovanför allt annat */
-	opacity: 0;
-	pointer-events: none; /* inte klickbar när hidden */
-	transition: all 0.3s ease;
+	margin-top: 20px;
 }
 
-.module-update.show {
-	opacity: 1;
-	pointer-events: auto; /* gör den klickbar när synlig */
-}
-
-.module-update-content {
-	background-color: rgba(30, 30, 30, 0.9); /* mörk box för innehåll */
-	padding: 2rem;
-	border-radius: 12px;
-	text-align: center;
+.settings-btn {
+	background-color: #4a90e2;
 	color: #fff;
-	max-width: 400px;
-	width: 90%;
-	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-	display: flex;
-	flex-direction: column;
-}
-
-.header-update {
+	padding: 15px 25px;
 	font-size: 1.2rem;
-	font-weight: 600;
-	margin-bottom: 1.5rem;
-}
-
-.update-btn {
-	padding: 0.6rem 1.5rem;
-	font-size: 1rem;
-	background-color: #1db954;
-	color: white;
+	font-weight: 500;
 	border: none;
 	border-radius: 8px;
 	cursor: pointer;
-	transition: all 0.2s ease;
+	transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.settings-btn:hover {
+	background-color: #357ab7;
+	transform: translateY(-3px);
+}
+
+.settings-btn:active {
+	transform: translateY(0);
+}
+
+.module-update {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.4);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	visibility: hidden;
+	opacity: 0;
+	transition: visibility 0.3s, opacity 0.3s;
+	backdrop-filter: blur(4px);
+}
+
+.module-update.show {
+	visibility: visible;
+	opacity: 1;
+}
+
+.module-update-content {
+	background-color: #fff;
+	border-radius: 12px;
+	padding: 40px;
+	text-align: center;
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+	width: 100%;
+	max-width: 420px;
+	animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+		transform: scale(0.9);
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+.header-update {
+	font-size: 1.5rem;
+	font-weight: 600;
+	color: #333;
+	margin-bottom: 25px;
+}
+
+.update-btn {
+	background-color: #4a90e2;
+	color: white;
+	padding: 12px 22px;
+	font-size: 1.1rem;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .update-btn:hover {
-	background-color: #17a74a;
-	transform: scale(1.05);
+	background-color: #357ab7;
+	transform: translateY(-3px); /* Liten upplyftningseffekt vid hover */
+}
+
+.update-btn:active {
+	transform: translateY(0);
+}
+
+/* Mobilanpassning */
+@media (max-width: 768px) {
+	.settings-container {
+		padding: 20px;
+	}
+
+	.form-div-settings {
+		padding: 25px;
+	}
+
+	.input-text {
+		font-size: 0.95rem;
+	}
+
+	.settings-btn {
+		padding: 12px 20px;
+		font-size: 1.1rem;
+	}
+
+	.header-update {
+		font-size: 1.3rem;
+	}
+
+	.update-btn {
+		padding: 12px 20px;
+		font-size: 1rem;
+	}
 }

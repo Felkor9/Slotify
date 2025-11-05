@@ -5,6 +5,7 @@ import LoginView from "./views/LoginView.jsx";
 import ScheduleView from "./views/ScheduleView.jsx";
 import CreateUserView from "./views/CreateUserView.jsx";
 import SettingsView from "./views/SettingsView.jsx";
+import AdminView from "./views/AdminView.jsx";
 import { createHashRouter, RouterProvider, Outlet } from "react-router-dom";
 import GlobalContext from "./GlobalContext";
 
@@ -23,6 +24,7 @@ const router = createHashRouter([
 			{ path: "schedule", element: <ScheduleView /> },
 			{ path: "create-user", element: <CreateUserView /> },
 			{ path: "settings", element: <SettingsView /> },
+			{ path: "admin", element: <AdminView /> },
 		],
 	},
 ]);

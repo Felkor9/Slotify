@@ -11,15 +11,20 @@ function NavBar() {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (users) {
-			setName(users.find((u) => u.id == loggedInUserId));
+		if (users.length > 0 && loggedInUserId) {
+			const foundUser = users.find((u) => u.id == loggedInUserId);
+			setName(foundUser); // Uppdatera användaren baserat på ID
 		}
 	}, [users, loggedInUserId]);
+
+	const isadmin = name?.isadmin;
 
 	function handleLogout() {
 		localStorage.removeItem("loggedInUserId");
 		setLoggedInUserId(null);
 		setIsHamMenuVisible(false);
+		setName(null);
+		navigate("/");
 	}
 
 	return (
@@ -31,10 +36,23 @@ function NavBar() {
 					Slotify
 				</h2>
 
+				{/* Visa användarnamn om inloggad */}
 				<p>
-					<strong>Inloggad som:</strong> {name?.username}
+					{name ? (
+						<>
+							<strong>Inloggad som:</strong> {name.username}
+						</>
+					) : (
+						""
+					)}
 				</p>
-
+				{isadmin ? (
+					<button className="admin-button" onClick={() => navigate("/admin")}>
+						Admin Panel
+					</button>
+				) : (
+					""
+				)}
 				<img
 					className="hamburger-icon"
 					onClick={() => setIsHamMenuVisible(!isHamMenuVisible)}
@@ -47,24 +65,50 @@ function NavBar() {
 			<div className={`ham-menu-overlay ${isHamMenuVisible ? "show" : ""}`}>
 				<ul className="ham-menu-list">
 					<li>
-						<Link className="link" to="/create-user">
-							Create account
+						{/* Om användaren är inloggad, visa rätt länk */}
+						<Link
+							onClick={() => setIsHamMenuVisible(false)}
+							className="link"
+							to={loggedInUserId ? "/schedule" : "/"}>
+							Home
 						</Link>
 					</li>
 					<li>
-						<Link className="link" to="/schedule">
+						{" "}
+						{loggedInUserId ? (
+							""
+						) : (
+							<Link onClick={() => setIsHamMenuVisible(false)} className="link" to="/create-user">
+								Create account
+							</Link>
+						)}
+					</li>
+					<li>
+						<Link onClick={() => setIsHamMenuVisible(false)} className="link" to="/schedule">
 							Schedule
 						</Link>
 					</li>
 					<li>
-						<Link className="link" to={"/settings"}>
+						<Link onClick={() => setIsHamMenuVisible(false)} className="link" to="/settings">
 							Settings
 						</Link>
 					</li>
 					<li>
-						<Link className="link" to="/" onClick={() => handleLogout()}>
-							Log Out
-						</Link>
+						{loggedInUserId ? (
+							<Link
+								className="link"
+								to="/"
+								onClick={() => {
+									handleLogout();
+									setIsHamMenuVisible(false); // Se till att meny döljs vid utloggning
+								}}>
+								Log Out
+							</Link>
+						) : (
+							<Link onClick={() => setIsHamMenuVisible(false)} className="link" to="/">
+								Log In
+							</Link>
+						)}
 					</li>
 					<li>My bookings</li>
 				</ul>

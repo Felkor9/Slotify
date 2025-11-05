@@ -32,7 +32,7 @@ function CreateUserComponent() {
 			setEmail("");
 			setPassword("");
 			setError(null);
-			navigate("/login");
+			navigate("/");
 		} catch (err) {
 			setError(err.message);
 		}

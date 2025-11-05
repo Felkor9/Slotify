@@ -60,15 +60,15 @@
 .input-group {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	gap: 3px;
+	margin-bottom: 20px;
 }
 
 label {
-	align-self: flex-start;
+	font-size: 1rem;
+	color: #333;
+	font-weight: 500; /* Ger en snygg typsnittsstil */
+	margin-bottom: -10px;
 }
-
 .input-text {
 	width: 250px;
 	height: 30px;
@@ -76,6 +76,13 @@ label {
 	border-radius: 5px;
 	padding: 3px;
 	background-color: #f9f9f9;
+	transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-text:focus {
+	border-color: #4a90e2;
+	box-shadow: 0 0 8px rgba(74, 144, 226, 0.5);
+	outline: none;
 }
 
 .btn-group {
