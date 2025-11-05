@@ -1,47 +1,45 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import GlobalContext from "./GlobalContext";
 
 const Schedule = () => {
-  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-  const timeSlots = ["09:00-13:00", "13:00-17:00", "17:00-21:00"];
-  const [maxBookings, _setMaxBookings] = useState(6);
-  const spots = [];
+  const [days, setDays] = useState([]);
+  const [timeSlots, setTimeSlots] = useState([]);
+  const [seats, setSeats] = useState([]);
 
-  // en array för att generera slots på varje timeSlot
-  for (let i = 0; i < maxBookings; i++) {
-    spots.push(i);
-  }
+  useEffect(() => {
+    fetch("/api/days")
+      .then((response) => response.json())
+      .then((data) => {
+        setDays(data);
+      })
+      .catch((error) => console.error("Error fetching days:", error));
+    fetch("/api/slots")
+      .then((response) => response.json())
+      .then((data) => {
+        setTimeSlots(data);
+      });
+    fetch("/api/seats")
+      .then((response) => response.json())
+      .then((data) => {
+        setSeats(data);
+      });
+  }, []);
 
   const { loggedInUserId, users } = useContext(GlobalContext);
 
   //* temporära tider att boka
-  const [bookings, setBookings] = useState(() => {
-    const array = [];
-    for (const day of days) {
-      for (const slot of timeSlots) {
-        array.push({ day, time: slot, booked: [] });
-      }
-    }
-    return array;
-  });
+  // const [bookings, setBookings] = useState(() => {
+  //   const array = [];
+  //   for (const day of days) {
+  //     for (const slot of timeSlots) {
+  //       array.push({ day.name, time: slot, booked: [] });
+  //     }
+  //   }
+  //   return array;
+  // });
 
   // bokar in användar id på tid och dag
-  const handleBooking = (day, time) => {
-    setBookings((prev) =>
-      prev.map((slot) => {
-        if (slot.day === day && slot.time === time) {
-          const isAlreadyBooked = slot.booked.includes(loggedInUserId);
-          return {
-            ...slot,
-            booked: isAlreadyBooked
-              ? slot.booked.filter((id) => id !== loggedInUserId)
-              : [...slot.booked, loggedInUserId],
-          };
-        }
-        return slot;
-      })
-    );
-  };
+  const handleBooking = (day, time) => {};
 
   return (
     <>
@@ -55,52 +53,56 @@ const Schedule = () => {
         <thead>
           <tr>
             <th style={{ border: "1px solid", width: "10%" }}>Tid</th>
-            {days.map((day) => (
-              <th key={day} style={{ border: "1px solid", width: "18%" }}>
-                {day}
-              </th>
-            ))}
+            {days &&
+              days.map((day) => (
+                <th key={day.id} style={{ border: "1px solid", width: "18%" }}>
+                  {day.name}
+                </th>
+              ))}
           </tr>
         </thead>
         <tbody>
-          {timeSlots.map((time) => (
-            <tr key={time}>
-              <td style={{ border: "1px solid" }}>{time}</td>
-              {days.map((day) => {
-                const booking = bookings.find(
-                  (slot) => slot.day === day && slot.time === time
-                );
-                return (
-                  <td
-                    key={day + time}
-                    style={{ border: "1px solid", cursor: "pointer" }}
-                    onClick={() => handleBooking(day, time)}
-                  >
-                    {spots.map((spot, idx) => {
-                      const bookedUser = booking?.booked[idx]
-                        ? users.find((u) => u.id === booking.booked[idx])
-                            ?.username
-                        : null;
-                      return (
-                        <div
-                          key={idx}
-                          style={{
-                            border: "1px solid rgb(191, 191, 191)",
-                            backgroundColor: bookedUser
-                              ? "#f5b2aaff"
-                              : "#afffa5ff",
-                            height: "24px",
-                          }}
-                        >
-                          {bookedUser || ""}
-                        </div>
-                      );
-                    })}
-                  </td>
-                );
-              })}
-            </tr>
-          ))}
+          {timeSlots &&
+            timeSlots.map((time) => (
+              <tr key={time.id}>
+                <td style={{ border: "1px solid" }}>
+                  {time.starttime} - {time.endtime}
+                </td>
+                {days.map((day) => {
+                  // const booking = bookings.find(
+                  //   (slot) => slot.day === day && slot.time === time
+                  // );
+                  return (
+                    <td
+                      key={day.id + time.id}
+                      style={{ border: "1px solid", cursor: "pointer" }}
+                      onClick={() => handleBooking(day.id, time.id)}
+                    >
+                      {seats.map((seat, idx) => {
+                        // const bookedUser = booking?.booked[idx]
+                        //   ? users.find((u) => u.id === booking.booked[idx])
+                        //       ?.username
+                        //   : null;
+                        return (
+                          <div
+                            key={idx}
+                            style={{
+                              border: "1px solid rgb(191, 191, 191)",
+                              // backgroundColor: bookedUser
+                              //   ? "#f5b2aaff"
+                              //   : "#afffa5ff",
+                              height: "24px",
+                            }}
+                          >
+                            {/* {bookedUser || ""} */}
+                          </div>
+                        );
+                      })}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
         </tbody>
       </table>
     </>

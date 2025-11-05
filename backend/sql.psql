@@ -21,6 +21,8 @@ startTime TIME,
 endTime TIME
 );
 
+SELECT (name, startTime, endTime) FROM day AND timeslots;
+
 CREATE TABLE seats(
   id SERIAL PRIMARY KEY,
   seatNumber INTEGER NOT NULL CHECK (seatNumber BETWEEN 1 AND 6)
@@ -31,7 +33,8 @@ id SERIAL PRIMARY KEY,
 user_id INTEGER REFERENCES "user"(id),
 day_id INTEGER REFERENCES day(id),
 timeslots_id INTEGER REFERENCES timeslots(id),
-seats_id INTEGER REFERENCES seats(id)
+seats_id INTEGER REFERENCES seats(id),
+UNIQUE(day_id, timeslot_id, seat_id)
 );
 
 
