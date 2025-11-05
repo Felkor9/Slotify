@@ -5,6 +5,7 @@ const Schedule = () => {
   const [days, setDays] = useState([]);
   const [timeSlots, setTimeSlots] = useState([]);
   const [seats, setSeats] = useState([]);
+  const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
     fetch("/api/days")
@@ -25,7 +26,17 @@ const Schedule = () => {
       });
   }, []);
 
+  useEffect(() => {
+    fetch("/api/bookings")
+      .then((response) => response.json())
+      .then((data) => {
+        setBookings(data);
+      });
+  }, []);
+
   const { loggedInUserId, users } = useContext(GlobalContext);
+  console.log("users:,", users);
+  console.log("bookings:", bookings);
 
   //* temporära tider att boka
   // const [bookings, setBookings] = useState(() => {
@@ -39,7 +50,21 @@ const Schedule = () => {
   // });
 
   // bokar in användar id på tid och dag
-  const handleBooking = (day, time) => {};
+  const handleBooking = async (dayid, timeslotid, seatid) => {
+    try {
+      const userid = Number(loggedInUserId);
+      const res = await fetch("/api/bookings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userid, dayid, timeslotid, seatid }),
+      });
+      if (!res.ok) throw new Error("Kunde inte boka ");
+      const updated = await fetch("/api/bookings").then((r) => r.json());
+      setBookings(updated);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 
   return (
     <>
@@ -76,25 +101,36 @@ const Schedule = () => {
                     <td
                       key={day.id + time.id}
                       style={{ border: "1px solid", cursor: "pointer" }}
-                      onClick={() => handleBooking(day.id, time.id)}
+                      onClick={() => handleBooking(day.id, time.id, 1)}
                     >
-                      {seats.map((seat, idx) => {
+                      {seats.map((seat) => {
                         // const bookedUser = booking?.booked[idx]
                         //   ? users.find((u) => u.id === booking.booked[idx])
                         //       ?.username
                         //   : null;
+                        const bookedUserId = bookings.find(
+                          (b) =>
+                            b.day_id === day.id &&
+                            b.timeslots_id === time.id &&
+                            b.seats_id === seat.id
+                        )?.user_id;
+
+                        const bookedUser = users.find(
+                          (u) => u.id === bookedUserId
+                        )?.username;
+
                         return (
                           <div
-                            key={idx}
+                            key={seat.id}
                             style={{
                               border: "1px solid rgb(191, 191, 191)",
-                              // backgroundColor: bookedUser
-                              //   ? "#f5b2aaff"
-                              //   : "#afffa5ff",
+                              backgroundColor: bookedUser
+                                ? "#f5b2aaff"
+                                : "#afffa5ff",
                               height: "24px",
                             }}
                           >
-                            {/* {bookedUser || ""} */}
+                            {bookedUser || ""}
                           </div>
                         );
                       })}

@@ -108,33 +108,63 @@ app.get("/api/seats", async (_request, response) => {
   response.send(rows);
 });
 
+app.get("/api/bookings", async (_request, response) => {
+  const { rows } = await client.query("SELECT * FROM bookings;");
+  response.send(rows);
+});
+
+app.post("/api/bookings", async (_request, response) => {
+  try {
+    const { userid, dayid, timeslotid, seatid } = _request.body;
+    console.log("body", _request.body);
+    if (!userid || !dayid || !timeslotid || !seatid) {
+      return response.status(400).json({ error: "Något gick fel" });
+    }
+
+    const result = await client.query(
+      `INSERT INTO bookings (user_id, day_id, timeslots_id, seats_id)
+      VALUES($1, $2, $3, $4) RETURNING *`,
+      [userid, dayid, timeslotid, seatid]
+    );
+    response.status(201).json({
+      id: result.rows[0].id,
+      username: result.rows[0].username,
+      email: result.rows[0].email,
+      isadmin: result.rows[0].isadmin,
+    });
+  } catch (err) {
+    console.error("Fel vid bokning:", err);
+    response.status(500).json({ error: err.message });
+  }
+});
+
 app.put(`/api/user/:id`, async (req, res) => {
-	try {
-		const { id } = req.params;
-		const { username, email, password } = req.body;
+  try {
+    const { id } = req.params;
+    const { username, email, password } = req.body;
 
-		const result = await client.query(
-			'UPDATE "user" SET username = $1, email = $2, password = $3 WHERE id = $4 RETURNING *',
-			[username, email, password, id]
-		);
-		const user = result.rows[0];
+    const result = await client.query(
+      'UPDATE "user" SET username = $1, email = $2, password = $3 WHERE id = $4 RETURNING *',
+      [username, email, password, id]
+    );
+    const user = result.rows[0];
 
-		res.status(200).json({
-			message: "Updated successfully",
-			user: {
-				id: user.id,
-				username: user.username,
-				email: user.email,
-				isadmin: user.isadmin,
-			},
-		});
-	} catch (err) {
-		console.error("Could not update credentials", err.message);
-		res.status(500).json({
-			message: "There was an error updating the user information",
-			error: err.message,
-		});
-	}
+    res.status(200).json({
+      message: "Updated successfully",
+      user: {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        isadmin: user.isadmin,
+      },
+    });
+  } catch (err) {
+    console.error("Could not update credentials", err.message);
+    res.status(500).json({
+      message: "There was an error updating the user information",
+      error: err.message,
+    });
+  }
 });
 
 app.use(express.static(path.join(path.resolve(), "dist")));
