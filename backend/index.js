@@ -115,22 +115,23 @@ app.get("/api/bookings", async (_request, response) => {
 
 app.post("/api/bookings", async (_request, response) => {
   try {
-    const { userid, dayid, timeslotid, seatid } = _request.body;
+    const { user_id, day_id, timeslots_id, seats_id } = _request.body;
     console.log("body", _request.body);
-    if (!userid || !dayid || !timeslotid || !seatid) {
+    if (!user_id || !day_id || !timeslots_id || !seats_id) {
       return response.status(400).json({ error: "Något gick fel" });
     }
 
     const result = await client.query(
       `INSERT INTO bookings (user_id, day_id, timeslots_id, seats_id)
       VALUES($1, $2, $3, $4) RETURNING *`,
-      [userid, dayid, timeslotid, seatid]
+      [user_id, day_id, timeslots_id, seats_id]
     );
     response.status(201).json({
       id: result.rows[0].id,
-      username: result.rows[0].username,
-      email: result.rows[0].email,
-      isadmin: result.rows[0].isadmin,
+      user_id: result.rows[0].user_id,
+      day_id: result.rows[0].day_id,
+      timeslots_id: result.rows[0].timeslots_id,
+      seats_id: result.rows[0].seats_id,
     });
   } catch (err) {
     console.error("Fel vid bokning:", err);

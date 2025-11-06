@@ -38,13 +38,34 @@ const Schedule = () => {
   console.log("users:,", users);
   console.log("bookings:", bookings);
 
-  const handleBooking = async (dayid, timeslotid, seatid) => {
+  const handleBooking = async (
+    bookedUserId,
+    day_id,
+    timeslots_id,
+    seats_id
+  ) => {
+    if (bookedUserId === loggedInUserId) {
+      try {
+        const user_id = Number(loggedInUserId);
+        const res = await fetch("/api/bookings", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ user_id, day_id, timeslots_id, seats_id }),
+        });
+        if (!res.ok) throw new Error("Kunde inte boka ");
+        const updated = await fetch("/api/bookings").then((r) => r.json());
+        setBookings(updated);
+      } catch (err) {
+        console.log(err.message);
+      }
+      return;
+    }
     try {
-      const userid = Number(loggedInUserId);
+      const user_id = Number(loggedInUserId);
       const res = await fetch("/api/bookings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userid, dayid, timeslotid, seatid }),
+        body: JSON.stringify({ user_id, day_id, timeslots_id, seats_id }),
       });
       if (!res.ok) throw new Error("Kunde inte boka ");
       const updated = await fetch("/api/bookings").then((r) => r.json());
@@ -89,7 +110,6 @@ const Schedule = () => {
                     <td
                       key={day.id + time.id}
                       style={{ border: "1px solid", cursor: "pointer" }}
-                      onClick={() => handleBooking(day.id, time.id, 1)}
                     >
                       {seats.map((seat) => {
                         // const bookedUser = booking?.booked[idx]
@@ -117,6 +137,14 @@ const Schedule = () => {
                                 : "#afffa5ff",
                               height: "24px",
                             }}
+                            onClick={() =>
+                              handleBooking(
+                                bookedUserId,
+                                day.id,
+                                time.id,
+                                seat.id
+                              )
+                            }
                           >
                             {bookedUser || ""}
                           </div>
