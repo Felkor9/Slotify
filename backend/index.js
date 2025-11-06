@@ -139,6 +139,31 @@ app.post("/api/bookings", async (_request, response) => {
   }
 });
 
+app.delete("/api/bookings", async (_request, response) => {
+  try {
+    const { user_id, day_id, timeslots_id, seats_id } = _request.body;
+    console.log("body", _request.body);
+    if (!user_id || !day_id || !timeslots_id || !seats_id) {
+      return response.status(400).json({ error: "Något gick fel" });
+    }
+
+    const result = await client.query(
+      `DELETE FROM bookings WHERE user_id = $1 AND day_id = $2 AND timeslots_id = $3 AND seats_id = $4 RETURNING *`,
+      [user_id, day_id, timeslots_id, seats_id]
+    );
+    response.status(201).json({
+      id: result.rows[0].id,
+      user_id: result.rows[0].user_id,
+      day_id: result.rows[0].day_id,
+      timeslots_id: result.rows[0].timeslots_id,
+      seats_id: result.rows[0].seats_id,
+    });
+  } catch (err) {
+    console.error("Fel vid bokning:", err);
+    response.status(500).json({ error: err.message });
+  }
+});
+
 app.put(`/api/user/:id`, async (req, res) => {
   try {
     const { id } = req.params;
