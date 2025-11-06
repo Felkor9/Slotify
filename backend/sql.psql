@@ -34,8 +34,8 @@ user_id INTEGER REFERENCES "user"(id),
 day_id INTEGER REFERENCES day(id),
 timeslots_id INTEGER REFERENCES timeslots(id),
 seats_id INTEGER REFERENCES seats(id),
-UNIQUE(user_id, day_id, timeslot_id, seat_id),
-UNIQUE(day_id, timeslot_id, seat_id)
+UNIQUE(user_id, day_id, timeslots_id, seats_id),
+UNIQUE(day_id, timeslots_id, seats_id)
 );
 
 
