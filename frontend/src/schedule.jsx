@@ -44,11 +44,11 @@ const Schedule = () => {
     timeslots_id,
     seats_id
   ) => {
-    if (bookedUserId === loggedInUserId) {
+    if (bookedUserId === Number(loggedInUserId)) {
       try {
         const user_id = Number(loggedInUserId);
         const res = await fetch("/api/bookings", {
-          method: "POST",
+          method: "DELETE",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ user_id, day_id, timeslots_id, seats_id }),
         });
