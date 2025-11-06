@@ -4,6 +4,10 @@
 	margin-left: 20px;
 }
 
+.slotify-container {
+	cursor: pointer;
+}
+
 .navbar-container {
 	display: flex;
 	justify-content: space-between;
@@ -87,7 +91,4 @@
 	border: none;
 	border-radius: 8px;
 	cursor: pointer;
-}
-.admin-button:hover {
-	color: #287c2f;
 }
