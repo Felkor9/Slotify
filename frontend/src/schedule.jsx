@@ -1,11 +1,13 @@
 import { useState, useContext, useEffect } from "react";
 import GlobalContext from "./GlobalContext";
+import "./schedule.css";
 
 const Schedule = () => {
   const [days, setDays] = useState([]);
   const [timeSlots, setTimeSlots] = useState([]);
   const [seats, setSeats] = useState([]);
   const [bookings, setBookings] = useState([]);
+  const [alreadyBooked, setAlreadyBooked] = useState(false);
 
   useEffect(() => {
     fetch("/api/days")
@@ -60,6 +62,18 @@ const Schedule = () => {
       }
       return;
     }
+
+    bookings.map((b) => {
+      if (
+        b.user_id === Number(loggedInUserId) &&
+        b.day_id === day_id &&
+        b.timeslots_id === timeslots_id
+      ) {
+        setAlreadyBooked(true);
+        return;
+      }
+    });
+
     try {
       const user_id = Number(loggedInUserId);
       const res = await fetch("/api/bookings", {
@@ -157,6 +171,16 @@ const Schedule = () => {
             ))}
         </tbody>
       </table>
+      {alreadyBooked && (
+        <div
+          className="alreadyBooked-modal"
+          onClick={() => setAlreadyBooked(false)}
+        >
+          <div className="alreadyBooked-content">
+            <h2>Du har redan en bokning denna dag och tid!</h2>
+          </div>
+        </div>
+      )}
     </>
   );
 };
