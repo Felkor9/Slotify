@@ -10,10 +10,9 @@ isadmin BOOLEAN DEFAULT false,
 password TEXT NOT NULL
 );
 
-CREATE TABLE day(
+CREATE TABLE seats(
   id SERIAL PRIMARY KEY,
-  name TEXT NOT NULL UNIQUE,
-  timeslots_id INTEGER REFERENCES timeslots(id)
+  seatNumber INTEGER NOT NULL CHECK (seatNumber BETWEEN 1 AND 6)
 );
 
 CREATE TABLE timeslots(
@@ -23,11 +22,10 @@ endTime TIME,
 seats_id INTEGER REFERENCES seats(id)
 );
 
-alter table day column timeslots_id REFERENCES timeslots(id)
-
-CREATE TABLE seats(
+CREATE TABLE day(
   id SERIAL PRIMARY KEY,
-  seatNumber INTEGER NOT NULL CHECK (seatNumber BETWEEN 1 AND 6)
+  name TEXT NOT NULL UNIQUE,
+  timeslots_id INTEGER REFERENCES timeslots(id)
 );
 
 CREATE TABLE bookings(
@@ -36,6 +34,7 @@ user_id INTEGER REFERENCES "user"(id),
 day_id INTEGER REFERENCES day(id),
 timeslots_id INTEGER REFERENCES timeslots(id),
 seats_id INTEGER REFERENCES seats(id),
+UNIQUE(user_id, day_id, timeslot_id, seat_id),
 UNIQUE(day_id, timeslot_id, seat_id)
 );
 
@@ -72,11 +71,11 @@ SELECT generate_series(1, 6);
 // --------------------------------- //
 
 
-DROP TABLE "user";
-DROP TABLE day;
-DROP TABLE timeslots;
-DROP TABLE seats;
 DROP TABLE bookings;
+DROP TABLE seats;
+DROP TABLE timeslots;
+DROP TABLE day;
+DROP TABLE "user";
 
 
 // --------------------------------- //
@@ -98,3 +97,7 @@ SELECT
 FROM day d
 CROSS JOIN timeslots t
 ORDER BY d.id, t.id;
+
+
+
+alter table day column timeslots_id REFERENCES timeslots(id)
