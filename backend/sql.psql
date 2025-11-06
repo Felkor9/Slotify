@@ -73,8 +73,8 @@ SELECT generate_series(1, 6);
 
 DROP TABLE bookings;
 DROP TABLE seats;
-DROP TABLE timeslots;
 DROP TABLE day;
+DROP TABLE timeslots;
 DROP TABLE "user";
 
 

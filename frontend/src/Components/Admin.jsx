@@ -51,7 +51,7 @@ function Admin() {
 								</div>
 								<div className="user-actions">
 									<label className="checkbox-container">
-										Make admin
+										Change admin status
 										<input
 											className="checkbox-custom"
 											type="checkbox"
@@ -72,7 +72,8 @@ function Admin() {
 				<div className="update-confirmation">
 					<div className="holder-confirmation">
 						<p>
-							Are you sure you want to make <strong>{selectedUser.username}</strong> Administrator?
+							Are you sure you want to change Administrator-status for{" "}
+							<strong>{selectedUser.username}</strong>?
 						</p>
 						<button
 							className="conf-btn"

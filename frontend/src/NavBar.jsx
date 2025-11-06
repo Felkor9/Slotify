@@ -30,12 +30,13 @@ function NavBar() {
 	return (
 		<nav>
 			<div className="navbar-container">
-				<h2
-					className="nav-header"
-					onClick={() => (loggedInUserId ? navigate("/schedule") : navigate("/"))}>
-					Slotify
-				</h2>
-
+				<div className="slotify-container">
+					<h2
+						className="nav-header"
+						onClick={() => (loggedInUserId ? navigate("/schedule") : navigate("/"))}>
+						Slotify
+					</h2>
+				</div>
 				{/* Visa användarnamn om inloggad */}
 				<p>
 					{name ? (
