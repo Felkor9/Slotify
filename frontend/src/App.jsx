@@ -9,6 +9,7 @@ import AdminView from "./views/AdminView.jsx";
 import { createHashRouter, RouterProvider, Outlet } from "react-router-dom";
 import GlobalContext from "./GlobalContext";
 import ProtectedRoute from "./ProtectedRoute.jsx";
+import { ToastContainer } from "react-toastify";
 
 const router = createHashRouter([
 	{
@@ -70,6 +71,17 @@ export default function App() {
 
 	return (
 		<GlobalContext.Provider value={{ loggedInUserId, setLoggedInUserId, users, setUsers }}>
+			<ToastContainer
+				position="top-right"
+				autoClose={3000}
+				hideProgressBar={false}
+				newestOnTop={false}
+				closeOnClick
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover
+				theme="colored"
+			/>
 			<RouterProvider router={router} />
 		</GlobalContext.Provider>
 	);

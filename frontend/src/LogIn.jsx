@@ -2,6 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import "./LogIn.css";
 import { Link, useNavigate } from "react-router-dom";
 import GlobalContext from "./GlobalContext";
+import { toast } from "react-toastify";
 
 function LogIn() {
 	const { setLoggedInUserId } = useContext(GlobalContext);
@@ -28,7 +29,7 @@ function LogIn() {
 				console.log(data);
 				setLoggedInUserId(data.user.id);
 				localStorage.setItem("loggedInUserId", data.user.id);
-
+				toast.success("Successfully logged in!");
 				navigate("/schedule");
 			} else {
 				alert(data.error);

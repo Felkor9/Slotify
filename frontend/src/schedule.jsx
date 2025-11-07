@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import GlobalContext from "./GlobalContext";
 import "./schedule.css";
 import "./schedule.css";
+import { toast } from "react-toastify";
 
 const Schedule = () => {
 	const [days, setDays] = useState([]);
@@ -51,11 +52,14 @@ const Schedule = () => {
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({ user_id, day_id, timeslots_id, seats_id }),
 				});
-				if (!res.ok) throw new Error("Kunde inte boka ");
+				if (!res.ok)
+					throw (new Error("Kunde inte boka "), toast.error("Kunde inte ta bort bokningen"));
 				const updated = await fetch("/api/bookings").then((r) => r.json());
 				setBookings(updated);
+				toast.success("Removed booking successfully!");
 			} catch (err) {
 				console.log(err.message);
+				toast.error("Kunde inte ta bort bokningen");
 			}
 			return;
 		}
@@ -80,8 +84,9 @@ const Schedule = () => {
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ user_id, day_id, timeslots_id, seats_id }),
 			});
-			if (!res.ok) throw new Error("Kunde inte boka ");
+			if (!res.ok) throw (new Error("Kunde inte boka "), toast.error("Could not create booking"));
 			const updated = await fetch("/api/bookings").then((r) => r.json());
+			toast.success("Booking created successfully!");
 			setBookings(updated);
 		} catch (err) {
 			console.log(err.message);
