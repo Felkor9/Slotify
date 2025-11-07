@@ -1,3 +1,4 @@
+/* === BASE LAYOUT === */
 .login-container {
 	width: 100vw;
 	height: 100vh;
@@ -6,75 +7,96 @@
 	margin: 0;
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-start;
+	justify-content: center; /* ändrat till center för vertikal centrering */
 	align-items: center;
 	position: relative;
-	z-index: 0;
+	overflow: hidden;
 }
 
+/* === BACKGROUND IMAGE + OVERLAY === */
 .header-img {
 	width: 100%;
 	height: 100%;
-	object-fit: cover; /* för att bilden inte ska förvrängas */
+	object-fit: cover;
 	position: absolute;
-	opacity: 0.5; /* istället för backdrop-filter */
+	top: 0;
+	left: 0;
+	opacity: 0.5;
+	z-index: 0;
 }
+
 .overlay {
 	position: absolute;
 	top: 0;
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background-color: rgba(0, 0, 0, 0.532); /* mörk overlay */
-	backdrop-filter: blur(4px); /* lägger på blur */
+	background-color: rgba(0, 0, 0, 0.532);
+	backdrop-filter: blur(4px);
 	z-index: 1;
 }
 
+/* === LOGIN BOX === */
 .form-div {
-	max-height: 70%;
-	min-height: 50%;
 	background-color: white;
 	border: solid 2px black;
 	border-radius: 10px;
-	max-width: 30%;
-	min-width: 20%;
+	width: 90%;
+	max-width: 400px; /* mer naturlig maxbredd */
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	gap: 10px;
+	gap: 15px;
 	box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
-	margin-top: 100px;
 	box-sizing: border-box;
-	padding: 20px;
-	z-index: 100;
+	padding: 25px;
+	z-index: 2;
 	position: relative;
+	/* margin: 20px; */
 }
 
+.login-form {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 15px;
+	width: 100%;
+}
+
+/* === TEXT & INPUTS === */
 .heading-slotify {
 	font-size: 2em;
 	font-weight: bold;
-	margin-bottom: 20px;
+	margin-bottom: 15px;
+	text-align: center;
 }
 
 .input-group {
 	display: flex;
 	flex-direction: column;
-	margin-bottom: 20px;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	max-width: 300px;
+	margin-bottom: 15px;
 }
 
 label {
 	font-size: 1rem;
 	color: #333;
-	font-weight: 500; /* Ger en snygg typsnittsstil */
-	margin-bottom: -10px;
+	font-weight: 500;
+	margin-top: 20px;
+	align-self: flex-start;
 }
+
 .input-text {
-	width: 250px;
-	height: 30px;
+	width: 100%;
+	height: 35px;
 	border: solid 1px gray;
 	border-radius: 5px;
-	padding: 3px;
+	padding: 5px 8px;
 	background-color: #f9f9f9;
 	transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -85,17 +107,20 @@ label {
 	outline: none;
 }
 
+/* === BUTTONS === */
 .btn-group {
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-start;
-	align-items: flex-start;
-	gap: 20px;
+	justify-content: center;
+	align-items: center;
+	gap: 15px;
+	width: 100%;
+	max-width: 300px;
 }
 
 .login-btn {
 	width: 100%;
-	height: 35px;
+	height: 40px;
 	border: none;
 	border-radius: 5px;
 	background-color: #000000;
@@ -103,23 +128,81 @@ label {
 	font-weight: bold;
 	cursor: pointer;
 	transition: all 0.3s ease;
-	align-self: center;
 }
+
 .login-btn:hover {
 	background-color: #333333;
 	transform: scale(1.05);
 }
 
+/* === SIGNUP LINK === */
 .signup-group {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	gap: 5px;
+	gap: 6px;
+	flex-wrap: wrap;
+	text-align: center;
 }
+
 .signup-btn {
 	background-color: transparent;
 	border: none;
 	color: blue;
 	text-decoration: underline;
 	cursor: pointer;
+}
+
+/* === RESPONSIVE BREAKPOINTS === */
+
+/* Tablets (≤1024px) */
+@media (max-width: 1024px) {
+	.form-div {
+		max-width: 450px;
+		padding: 25px 30px;
+	}
+}
+
+/* Mobiler (≤768px) */
+@media (max-width: 768px) {
+	.login-container {
+		justify-content: flex-start; /* flytta upp lite */
+		padding-top: 50px;
+	}
+	.form-div {
+		width: 90%;
+		max-width: 350px;
+		padding: 20px;
+	}
+	.heading-slotify {
+		font-size: 1.8em;
+	}
+	.input-text {
+		height: 35px;
+	}
+	.login-btn {
+		height: 38px;
+	}
+}
+
+/* Små mobiler (≤480px) */
+@media (max-width: 480px) {
+	.heading-slotify {
+		font-size: 1.6em;
+	}
+	.form-div {
+		width: 95%;
+		padding: 15px;
+		gap: 10px;
+	}
+	label {
+		font-size: 0.9rem;
+	}
+	.input-text {
+		font-size: 0.9rem;
+	}
+	.login-btn {
+		height: 36px;
+		font-size: 0.9rem;
+	}
 }

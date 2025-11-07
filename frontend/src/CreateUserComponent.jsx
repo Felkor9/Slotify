@@ -8,7 +8,7 @@ function CreateUserComponent() {
 	const [username, setUserName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [error, setError] = useState(null);
+
 	const [istermsVisible, setIsTermsVisible] = useState(false);
 	const [gdprCheckbox, setGdprCheckbox] = useState(false);
 
@@ -20,7 +20,7 @@ function CreateUserComponent() {
 
 	const addUser = async () => {
 		if (!username || !email || !password) {
-			setError("Vänligen fyll i alla fält.");
+			toast.error("All fields are required.");
 			return;
 		}
 		if (!gdprCheckbox) {
@@ -38,10 +38,10 @@ function CreateUserComponent() {
 			setUserName("");
 			setEmail("");
 			setPassword("");
-			setError(null);
+
 			navigate("/");
 		} catch (err) {
-			setError(err.message);
+			toast.error("Failed to create user. Please try again.", err);
 		}
 	};
 
@@ -49,7 +49,6 @@ function CreateUserComponent() {
 		<>
 			<div className="login-container">
 				<div className="signup-div">
-					<div className="cursor-glow"></div>
 					<h1 className="slotify-icon">SLOTIFY</h1>
 				</div>
 				<div className="form-create-div">
@@ -115,12 +114,9 @@ function CreateUserComponent() {
 							</p>
 						</div>
 
-						<div className="btn-group">
-							{error && <p style={{ color: "red" }}>Fel: {error}</p>}
-							<button className="create-btn" onClick={addUser} type="submit">
-								Create Account
-							</button>
-						</div>
+						<button className="create-btn" onClick={addUser} type="submit">
+							Create Account
+						</button>
 					</form>
 				</div>
 			</div>
@@ -159,10 +155,10 @@ function CreateUserComponent() {
 								</li>
 								<li>We implement appropriate security measures to protect your data.</li>
 							</ul>
-							<button className="terms-btn" onClick={() => setIsTermsVisible(false)}>
-								Close
-							</button>
 						</div>
+						<button className="terms-btn" onClick={() => setIsTermsVisible(false)}>
+							Close
+						</button>
 					</div>
 				</div>
 			)}
