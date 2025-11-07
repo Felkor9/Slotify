@@ -1,15 +1,15 @@
 ## G
 
 - [x] Applikationen ska ha ett frontend, ett backend och en databas.
-- [ ] Alla kodändringar måste föras in på main-branch:en minst en gång per “arbetsdag”. Detta kallas Continous Integration.
+- [x] Alla kodändringar måste föras in på main-branch:en minst en gång per “arbetsdag”. Detta kallas Continous Integration.
 - [ ] Alla måste individuellt publicera applikationen på sin egen server och dokumentera sin insats i rapporten.
 - [ ] Applikationen ska publiceras med Docker Compose. Ni kan samarbeta med att skapa Docker Compose-konfigurationen. Minst två services måste specificeras i compose.yaml. Frontend- och backend-delarna kan ingå i samma service men databasen måste vara en separat service. Tjänsterna kan startas med docker compose up -d. (-d-växeln kan ha betydelse eftersom tjänsterna annars kan stängas av när SSH-sessionen avslutas.)
 - [ ] Alla måste delta i att förbättra prestandan i projektet och dokumentera sin insats i rapporten. För exempel på prestandaförbättringar, se modulen Några webboptimeringar.
 - [ ] Alla måste delta i att göra projektet GDPR-kompatibelt och dokumentera sin insats i rapporten. För mer information om GDPR, se modulen GDPR och datasäkerhet.
-- [ ] Alla måste delta i att utveckla fullstack-applikationen och utföra frontend-, backend- och databasrelaterat arbete, och dokumentera sin insats i rapporten.
-- [ ] Projektet ska kunna behandla påhittade personuppgifter.
+- [x] Alla måste delta i att utveckla fullstack-applikationen och utföra frontend-, backend- och databasrelaterat arbete, och dokumentera sin insats i rapporten.
+- [x] Projektet ska kunna behandla påhittade personuppgifter.
 - [ ] Upprätta som grupp ett register över behandlingen av (de påhittade) personuppgifterna i systemet. Använd gärna Integritetsskyddsmyndighetens checklista kring att föra register över behandling.
-- [ ] Gör det möjligt för användare att skapa konton eller på något annat sätt föra in personuppgifter i systemet. Informera användarna om vilka personuppgifter som hanteras och varför. Inkludera en integritetsskyddspolicy. Om samtycke används som laglig grund för personuppgiftshanteringen måste användaren aktivt samtycka till behandlingen. (Detta innebär att användaren måste göra valet att bocka i en kryssruta eller liknande.)
+- [x] Gör det möjligt för användare att skapa konton eller på något annat sätt föra in personuppgifter i systemet. Informera användarna om vilka personuppgifter som hanteras och varför. Inkludera en integritetsskyddspolicy. Om samtycke används som laglig grund för personuppgiftshanteringen måste användaren aktivt samtycka till behandlingen. (Detta innebär att användaren måste göra valet att bocka i en kryssruta eller liknande.)
 - [ ] Ge användarna möjligheten att komma åt, ändra och radera sina personuppgifter.
 - [ ] Alla måste bidra till det GDPR-relaterade arbetet och dokumenterar i sin insats i rapporten.
 - [ ] Databasen ska finnas kvar, och applikationen ska fortsätta fungera, även om docker compose down följt av docker compose up körs. För att uppnå detta kan databasens filer (/var/lib/postgresql/data i PostgreSQL-tjänsten) placeras på värdystemet (utanför Docker) med en volumes-deklaration. Detta förhindrar att databastabeller försvinner när docker compose down körs. Om PostgreSQL används och databastjänsten heter “database” går databasen att komma åt via docker compose exec database psql --username=postgres. (När PostgreSQL-tjänsten körs lokalt på en dator (alltså inte på en server), och Git Bash på Windows används, behöver winpty docker compose exec database psql --username=postgres användas.)
