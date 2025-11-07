@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import "./settingsComponent.css";
 import GlobalContext from "../GlobalContext";
+import { toast } from "react-toastify";
 
 function SettingsComponent() {
 	const [username, setUserName] = useState("");
@@ -29,7 +30,7 @@ function SettingsComponent() {
 
 	const handleUpdateClick = () => {
 		if (!email || !password || !currentPassword) {
-			alert("Please fill in all fields before updating!");
+			toast.error("Please fill in all fields.");
 			return;
 		}
 		setUpdateVisible(true); // Visa modalen för att bekräfta uppdatering
@@ -38,7 +39,7 @@ function SettingsComponent() {
 	const handleUpdate = () => {
 		// Kontrollera att användaren finns
 		if (!users || !user.id) {
-			alert("No user data available.");
+			toast.error("User data is not available.");
 			return;
 		}
 
@@ -50,19 +51,22 @@ function SettingsComponent() {
 		})
 			.then((response) => {
 				if (!response.ok) {
-					throw new Error("Network response was not ok");
+					throw (
+						(new Error("Network response was not ok"),
+						toast.error("There was an error updating your information."))
+					);
 				}
 				return response.json();
 			})
 			.then((data) => {
 				console.log("Success:", data);
 				setUpdateVisible(false); // Stäng modalen
-				alert("User information updated successfully!");
+				toast.success("User information updated successfully!");
 				setUser(data.user); // Uppdatera användaren i state
 			})
 			.catch((error) => {
 				console.error("Error:", error);
-				alert("There was an error updating your information.");
+				toast.error("There was an error updating your information.");
 			});
 	};
 
