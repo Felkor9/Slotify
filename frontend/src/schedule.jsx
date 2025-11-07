@@ -140,10 +140,7 @@ const Schedule = () => {
                     //   (slot) => slot.day === day && slot.time === time
                     // );
                     return (
-                      <td
-                        key={day.id + time.id}
-                        style={{ border: "1px solid", cursor: "pointer" }}
-                      >
+                      <td key={day.id + time.id} style={{ cursor: "pointer" }}>
                         {seats.map((seat) => {
                           // const bookedUser = booking?.booked[idx]
                           //   ? users.find((u) => u.id === booking.booked[idx])
@@ -169,7 +166,6 @@ const Schedule = () => {
                                 backgroundColor: bookedUser
                                   ? "#f5b2aaff"
                                   : "#afffa5ff",
-                                height: "24px",
                               }}
                               onClick={() =>
                                 handleBooking(

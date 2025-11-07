@@ -60,12 +60,12 @@ tbody tr:hover {
 }
 
 .seat-div {
-  margin: 2px;
+  margin: 1px;
   padding: 8px 10px;
   border-radius: 4px;
   background-color: #e0e0e0;
   cursor: pointer;
-  height: 15px;
+  height: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
