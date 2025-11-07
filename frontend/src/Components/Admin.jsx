@@ -1,6 +1,7 @@
 import "./Admin.css";
 import { useContext, useState } from "react";
 import GlobalContext from "../GlobalContext";
+import { toast } from "react-toastify";
 
 function Admin() {
 	const { users } = useContext(GlobalContext);
@@ -17,17 +18,20 @@ function Admin() {
 		})
 			.then((response) => {
 				if (!response.ok) {
-					throw new Error("Network response was not ok");
+					throw (
+						(new Error("Network response was not ok"),
+						toast.error("There was an error updating admin status."))
+					);
 				}
 				return response.json();
 			})
 			.then((data) => {
 				console.log("Success:", data);
-				alert("User information updated successfully!");
+				toast.success("Admin status updated successfully!");
 			})
 			.catch((error) => {
 				console.error("Error:", error);
-				alert("There was an error updating your information.");
+				toast.error("There was an error updating admin status.");
 			});
 	};
 

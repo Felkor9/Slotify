@@ -32,10 +32,11 @@ function LogIn() {
 				toast.success("Successfully logged in!");
 				navigate("/schedule");
 			} else {
-				alert(data.error);
+				toast.error(data.message || "Login failed. Please try again.");
 			}
 		} catch (err) {
-			console.error(err.message);
+			toast.error("An error occurred during login. Please try again.");
+			console.error("Login error:", err);
 		}
 	};
 
