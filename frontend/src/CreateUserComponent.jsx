@@ -1,6 +1,7 @@
 import "./CreateUserComponent.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 function CreateUserComponent() {
 	const navigate = useNavigate();
@@ -9,6 +10,7 @@ function CreateUserComponent() {
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState(null);
 	const [istermsVisible, setIsTermsVisible] = useState(false);
+	const [gdprCheckbox, setGdprCheckbox] = useState(false);
 
 	useEffect(() => {
 		fetch("/api/user")
@@ -19,6 +21,10 @@ function CreateUserComponent() {
 	const addUser = async () => {
 		if (!username || !email || !password) {
 			setError("Vänligen fyll i alla fält.");
+			return;
+		}
+		if (!gdprCheckbox) {
+			toast.error("You must agree to the terms of use and GDPR handling.");
 			return;
 		}
 		try {
@@ -89,7 +95,15 @@ function CreateUserComponent() {
 						</div>
 						<div className="terms-group">
 							<label htmlFor="agree"></label>
-							<input type="checkbox" name="agree" id="agree" required className="check-btn" />
+							<input
+								type="checkbox"
+								value={gdprCheckbox}
+								onChange={(e) => setGdprCheckbox(e.target.value)}
+								name="agree"
+								id="agree"
+								required
+								className="check-btn"
+							/>
 							Agree terms of use and handling of GDPR{" "}
 						</div>
 						<div className="terms-div">

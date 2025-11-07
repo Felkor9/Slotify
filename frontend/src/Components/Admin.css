@@ -1,6 +1,8 @@
 /* Grundläggande layout och färger */
 .admin-container {
-	max-width: 1200px;
+	max-width: 90vw;
+	height: 50vh;
+	min-width: 70vh;
 	margin: 0 auto;
 	padding: 20px;
 	font-family: "Arial", sans-serif;
