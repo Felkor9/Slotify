@@ -8,6 +8,7 @@ import SettingsView from "./views/SettingsView.jsx";
 import AdminView from "./views/AdminView.jsx";
 import { createHashRouter, RouterProvider, Outlet } from "react-router-dom";
 import GlobalContext from "./GlobalContext";
+import ProtectedRoute from "./ProtectedRoute.jsx";
 
 const router = createHashRouter([
 	{
@@ -21,10 +22,34 @@ const router = createHashRouter([
 		),
 		children: [
 			{ index: true, element: <LoginView /> },
-			{ path: "schedule", element: <ScheduleView /> },
-			{ path: "create-user", element: <CreateUserView /> },
-			{ path: "settings", element: <SettingsView /> },
-			{ path: "admin", element: <AdminView /> },
+			{
+				path: "schedule",
+				element: (
+					<ProtectedRoute>
+						<ScheduleView />
+					</ProtectedRoute>
+				),
+			},
+			{
+				path: "create-user",
+				element: <CreateUserView />,
+			},
+			{
+				path: "settings",
+				element: (
+					<ProtectedRoute>
+						<SettingsView />{" "}
+					</ProtectedRoute>
+				),
+			},
+			{
+				path: "admin",
+				element: (
+					<ProtectedRoute>
+						<AdminView />
+					</ProtectedRoute>
+				),
+			},
 		],
 	},
 ]);

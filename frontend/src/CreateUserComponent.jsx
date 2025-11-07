@@ -42,11 +42,14 @@ function CreateUserComponent() {
 	return (
 		<>
 			<div className="login-container">
-				<div className="form-div">
+				<div className="signup-div"></div>
+				<div className="form-create-div">
 					<h2 className="heading-slotify">Sign up to Slotify</h2>
-					<form className="login-form" onSubmit={(e) => e.preventDefault()}>
-						<div className="input-group">
-							<label htmlFor="username">Name:</label>
+					<form className="create-form" onSubmit={(e) => e.preventDefault()}>
+						<div className="input-group-create">
+							<label className="label-create" htmlFor="username">
+								Name:
+							</label>
 							<input
 								className="input-text"
 								type="text"
@@ -56,7 +59,9 @@ function CreateUserComponent() {
 								onChange={(e) => setUserName(e.target.value)}
 								required
 							/>
-							<label htmlFor="email">Email:</label>
+							<label className="label-create" htmlFor="email">
+								Email:
+							</label>
 							<input
 								className="input-text"
 								value={email}
@@ -66,7 +71,9 @@ function CreateUserComponent() {
 								name="email"
 								required
 							/>
-							<label htmlFor="password">Password:</label>
+							<label className="label-create" htmlFor="password">
+								Password:
+							</label>
 							<input
 								className="input-text"
 								type="password"
@@ -76,18 +83,24 @@ function CreateUserComponent() {
 								onChange={(e) => setPassword(e.target.value)}
 								required
 							/>
-							<div className="terms-group">
-								<label htmlFor="agree">Agree terms of use and handling of GDPR</label>{" "}
-								<input type="checkbox" name="agree" id="agree" required className="check-btn" />
-							</div>
-							<div className="terms-div" onClick={() => setIsTermsVisible(true)}>
-								<p>Terms of use. Read here </p>
-								<img src="./assets/questionmark.png" alt="?" className="question-mark"></img>
-							</div>
 						</div>
+						<div className="terms-group">
+							<label htmlFor="agree"></label>
+							<input type="checkbox" name="agree" id="agree" required className="check-btn" />
+							Agree terms of use and handling of GDPR{" "}
+						</div>
+						<div className="terms-div">
+							<p>
+								By creating an account, you agree to the{" "}
+								<a onClick={() => setIsTermsVisible(true)} className="terms-link">
+									Terms of Service.
+								</a>{" "}
+							</p>
+						</div>
+
 						<div className="btn-group">
 							{error && <p style={{ color: "red" }}>Fel: {error}</p>}
-							<button className="login-btn" onClick={addUser} type="submit">
+							<button className="create-btn" onClick={addUser} type="submit">
 								Create Account
 							</button>
 						</div>
