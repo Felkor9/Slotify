@@ -42,7 +42,10 @@ function CreateUserComponent() {
 	return (
 		<>
 			<div className="login-container">
-				<div className="signup-div"></div>
+				<div className="signup-div">
+					<div className="cursor-glow"></div>
+					<h1 className="slotify-icon">SLOTIFY</h1>
+				</div>
 				<div className="form-create-div">
 					<h2 className="heading-slotify">Sign up to Slotify</h2>
 					<form className="create-form" onSubmit={(e) => e.preventDefault()}>
