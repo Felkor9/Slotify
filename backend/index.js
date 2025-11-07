@@ -116,11 +116,33 @@ app.get("/api/bookings", async (_request, response) => {
 app.post("/api/bookings", async (_request, response) => {
   try {
     const { user_id, day_id, timeslots_id, seats_id } = _request.body;
-    console.log("body", _request.body);
     if (!user_id || !day_id || !timeslots_id || !seats_id) {
       return response.status(400).json({ error: "Något gick fel" });
     }
 
+    // kontrollera om användaren redan har en bokning för samma dag+tid
+    const userCheck = await client.query(
+      `SELECT 1 FROM bookings WHERE user_id = $1 AND day_id = $2 AND timeslots_id = $3`,
+      [user_id, day_id, timeslots_id]
+    );
+    if (userCheck.rowCount > 0) {
+      return response
+        .status(409)
+        .json({ message: "Du har redan en bokning den tiden" });
+    }
+
+    // kontrollera om platsen är upptagen för samma dag+tid
+    const seatCheck = await client.query(
+      `SELECT 1 FROM bookings WHERE day_id = $1 AND timeslots_id = $2 AND seats_id = $3`,
+      [day_id, timeslots_id, seats_id]
+    );
+    if (seatCheck.rowCount > 0) {
+      return response
+        .status(409)
+        .json({ message: "Den här platsen är redan bokad den tiden" });
+    }
+
+    // skapa bokningen
     const result = await client.query(
       `INSERT INTO bookings (user_id, day_id, timeslots_id, seats_id)
       VALUES($1, $2, $3, $4) RETURNING *`,

@@ -46,6 +46,7 @@ const Schedule = () => {
     timeslots_id,
     seats_id
   ) => {
+    // om platsen är bokad av den inloggade användaren, ta bort bokningen
     if (bookedUserId === Number(loggedInUserId)) {
       try {
         const user_id = Number(loggedInUserId);
@@ -63,6 +64,7 @@ const Schedule = () => {
       return;
     }
 
+    // kolla om användaren redan har en bokning samma dag och tid
     bookings.map((b) => {
       if (
         b.user_id === Number(loggedInUserId) &&
@@ -74,6 +76,7 @@ const Schedule = () => {
       }
     });
 
+    // annars skapa en ny bokning
     try {
       const user_id = Number(loggedInUserId);
       const res = await fetch("/api/bookings", {

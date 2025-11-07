@@ -35,7 +35,8 @@ day_id INTEGER REFERENCES day(id),
 timeslots_id INTEGER REFERENCES timeslots(id),
 seats_id INTEGER REFERENCES seats(id),
 UNIQUE(user_id, day_id, timeslots_id, seats_id),
-UNIQUE(day_id, timeslots_id, seats_id)
+UNIQUE(day_id, timeslots_id, seats_id),
+UNIQUE (user_id, day_id, timeslots_id)
 );
 
 
@@ -72,9 +73,9 @@ SELECT generate_series(1, 6);
 
 
 DROP TABLE bookings;
-DROP TABLE seats;
 DROP TABLE day;
 DROP TABLE timeslots;
+DROP TABLE seats;
 DROP TABLE "user";
 
 
