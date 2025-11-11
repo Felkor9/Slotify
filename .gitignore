@@ -1,3 +1,5 @@
 compose.yaml
-data
-db-init
+
+/data
+
+/db-init/init.sql

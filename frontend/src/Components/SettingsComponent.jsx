@@ -94,11 +94,13 @@ function SettingsComponent() {
 								<p>Loading user data...</p>
 							)}
 						</div>
-						<form className="login-form" onSubmit={(e) => e.preventDefault()}>
-							<div className="input-group">
-								<label htmlFor="username">Name:</label>
+						<form className="settings-form" onSubmit={(e) => e.preventDefault()}>
+							<div className="input-settings">
+								<label className="label-settings" htmlFor="username">
+									Name:
+								</label>
 								<input
-									className="input-text"
+									className="settingInputs"
 									type="text"
 									id="username"
 									name="username"
@@ -106,9 +108,11 @@ function SettingsComponent() {
 									onChange={(e) => setUserName(e.target.value)}
 									required
 								/>
-								<label htmlFor="email">Email:</label>
+								<label className="label-settings" htmlFor="email">
+									Email:
+								</label>
 								<input
-									className="input-text"
+									className="settingInputs"
 									value={email}
 									onChange={(e) => setEmail(e.target.value)}
 									type="email"
@@ -116,18 +120,22 @@ function SettingsComponent() {
 									name="email"
 									required
 								/>
-								<label htmlFor="currentPassword">Current Password:</label>
+								<label className="label-settings" htmlFor="currentPassword">
+									Current Password:
+								</label>
 								<input
-									className="input-text"
+									className="settingInputs"
 									type="password"
 									id="currentPassword"
 									value={currentPassword}
 									onChange={(e) => setCurrentPassword(e.target.value)}
 									required
 								/>
-								<label htmlFor="password">New Password:</label>
+								<label className="label-settings" htmlFor="password">
+									New Password:
+								</label>
 								<input
-									className="input-text"
+									className="settingInputs"
 									type="password"
 									id="password"
 									name="password"

@@ -42,14 +42,14 @@ function LogIn() {
 
 	return (
 		<>
-			<div className="login-container">
-				<img src="/header.png" alt="" className="header-img" />
-				<div className="overlay"></div>
+			<div className="logins-container">
 				<div className="form-div">
-					<h2 className="heading-slotify">Log In to Slotify</h2>
+					<h2 className="heading-login-slotify">Log In to Slotify</h2>
 					<form className="login-form" onSubmit={(e) => e.preventDefault()}>
 						<div className="input-group">
-							<label htmlFor="username">Email:</label>
+							<label className="login-label" htmlFor="username">
+								Email:
+							</label>
 							<input
 								className="input-text"
 								type="text"
@@ -59,7 +59,9 @@ function LogIn() {
 								name="username"
 								required
 							/>
-							<label htmlFor="password">Password:</label>
+							<label className="login-label" htmlFor="password">
+								Password:
+							</label>
 							<input
 								className="input-text"
 								type="password"

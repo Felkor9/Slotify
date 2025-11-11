@@ -1,104 +1,77 @@
 /* === BASE LAYOUT === */
-.login-container {
+.logins-container {
 	width: 100vw;
 	height: 100vh;
-	background-color: rgba(119, 119, 119, 0.256);
-	padding: 0;
-	margin: 0;
+	background-color: #dad9d7;
 	display: flex;
-	flex-direction: column;
-	justify-content: center; /* ändrat till center för vertikal centrering */
+	justify-content: center;
 	align-items: center;
-	position: relative;
-	overflow: hidden;
-}
-
-/* === BACKGROUND IMAGE + OVERLAY === */
-.header-img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	position: absolute;
-	top: 0;
-	left: 0;
-	opacity: 0.5;
-	z-index: 0;
-}
-
-.overlay {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 0.532);
-	backdrop-filter: blur(4px);
-	z-index: 1;
+	padding: 20px;
+	box-sizing: border-box;
 }
 
 /* === LOGIN BOX === */
 .form-div {
-	background-color: white;
-	border: solid 2px black;
+	background-color: #fff;
+	border: 2px solid #fff;
 	border-radius: 10px;
-	width: 90%;
-	max-width: 400px; /* mer naturlig maxbredd */
+	width: min(90%, 400px);
+	max-width: 400px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	gap: 15px;
-	box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
-	box-sizing: border-box;
+	box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
 	padding: 25px;
-	z-index: 2;
-	position: relative;
-	/* margin: 20px; */
+	box-sizing: border-box;
+	gap: 15px;
+	height: auto;
 }
 
+/* === FORM === */
 .login-form {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
 	align-items: center;
-	gap: 15px;
 	width: 100%;
+	gap: 8px;
 }
 
-/* === TEXT & INPUTS === */
-.heading-slotify {
-	font-size: 2em;
+/* === HEADER / TITEL === */
+.heading-login-slotify {
+	font-size: clamp(1.2em, 2vw, 1.6em); /* mindre på stora skärmar */
 	font-weight: bold;
-	margin-bottom: 15px;
 	text-align: center;
+	margin-bottom: 15px;
+	color: #333;
 }
 
+/* === INPUTS === */
 .input-group {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	align-items: center;
 	width: 100%;
-	max-width: 300px;
 	margin-bottom: 15px;
 }
 
-label {
-	font-size: 1rem;
+.login-label {
+	font-size: clamp(0.85rem, 1.5vw, 1rem);
 	color: #333;
 	font-weight: 500;
-	margin-top: 20px;
-	align-self: flex-start;
+	margin-bottom: 5px;
+	justify-self: flex-start;
 }
 
 .input-text {
 	width: 100%;
-	height: 35px;
-	border: solid 1px gray;
+	height: 36px;
+	border: 1px solid gray;
 	border-radius: 5px;
-	padding: 5px 8px;
+	padding: 5px 10px;
 	background-color: #f9f9f9;
 	transition: border-color 0.3s ease, box-shadow 0.3s ease;
+	box-sizing: border-box;
+	margin-bottom: 10px;
 }
 
 .input-text:focus {
@@ -111,11 +84,8 @@ label {
 .btn-group {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	gap: 15px;
 	width: 100%;
-	max-width: 300px;
+	gap: 12px;
 }
 
 .login-btn {
@@ -123,16 +93,16 @@ label {
 	height: 40px;
 	border: none;
 	border-radius: 5px;
-	background-color: #000000;
-	color: white;
+	background-color: #000;
+	color: #fff;
 	font-weight: bold;
 	cursor: pointer;
 	transition: all 0.3s ease;
 }
 
 .login-btn:hover {
-	background-color: #333333;
-	transform: scale(1.05);
+	background-color: #333;
+	transform: scale(1.03);
 }
 
 /* === SIGNUP LINK === */
@@ -143,66 +113,75 @@ label {
 	gap: 6px;
 	flex-wrap: wrap;
 	text-align: center;
+	font-size: 0.9rem;
 }
 
 .signup-btn {
 	background-color: transparent;
 	border: none;
-	color: blue;
+	color: #1a73e8; /* blå länk */
 	text-decoration: underline;
 	cursor: pointer;
 }
 
-/* === RESPONSIVE BREAKPOINTS === */
-
-/* Tablets (≤1024px) */
-@media (max-width: 1024px) {
-	.form-div {
-		max-width: 450px;
-		padding: 25px 30px;
-	}
+.signup-btn:hover {
+	color: #1558b0;
 }
 
-/* Mobiler (≤768px) */
-@media (max-width: 768px) {
-	.login-container {
-		justify-content: flex-start; /* flytta upp lite */
-		padding-top: 50px;
-	}
+/* === RESPONSIVE BREAKPOINTS === */
+
+/* Tablets ≤1024px */
+@media (max-width: 1024px) {
 	.form-div {
-		width: 90%;
 		max-width: 350px;
 		padding: 20px;
 	}
-	.heading-slotify {
-		font-size: 1.8em;
-	}
-	.input-text {
-		height: 35px;
-	}
-	.login-btn {
-		height: 38px;
+	.heading-login-slotify {
+		font-size: 1.4em;
 	}
 }
 
-/* Små mobiler (≤480px) */
-@media (max-width: 480px) {
-	.heading-slotify {
-		font-size: 1.6em;
+/* Mobiler ≤768px */
+@media (max-width: 768px) {
+	.logins-container {
+		padding-top: 40px;
 	}
+	.form-div {
+		width: 90%;
+		max-width: 300px;
+		padding: 18px;
+	}
+	.heading-login-slotify {
+		font-size: 1.3em;
+	}
+	.input-text {
+		height: 34px;
+		font-size: 0.95rem;
+	}
+	.login-btn {
+		height: 36px;
+	}
+}
+
+/* Små mobiler ≤480px */
+@media (max-width: 480px) {
 	.form-div {
 		width: 95%;
 		padding: 15px;
 		gap: 10px;
 	}
+	.heading-login-slotify {
+		font-size: 1.2em;
+	}
 	label {
-		font-size: 0.9rem;
+		font-size: 0.85rem;
 	}
 	.input-text {
 		font-size: 0.9rem;
+		height: 32px;
 	}
 	.login-btn {
-		height: 36px;
+		height: 34px;
 		font-size: 0.9rem;
 	}
 }
