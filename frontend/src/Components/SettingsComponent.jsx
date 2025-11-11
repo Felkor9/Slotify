@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import "./settingsComponent.css";
+import "./SettingsComponent.css";
 import GlobalContext from "../GlobalContext";
 import { toast } from "react-toastify";
 
