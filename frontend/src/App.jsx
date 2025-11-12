@@ -1,11 +1,16 @@
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import NavBar from "./NavBar.jsx";
-import LoginView from "./views/LoginView.jsx";
-import ScheduleView from "./views/ScheduleView.jsx";
-import CreateUserView from "./views/CreateUserView.jsx";
-import SettingsView from "./views/SettingsView.jsx";
-import AdminView from "./views/AdminView.jsx";
+
+const LoginView = lazy(() => import("./views/LoginView.jsx"));
+// import ScheduleView from "./views/ScheduleView.jsx";
+const ScheduleView = lazy(() => import("./views/ScheduleView.jsx"));
+// import CreateUserView from "./views/CreateUserView.jsx";
+const CreateUserView = lazy(() => import("./views/CreateUserView.jsx"));
+// import SettingsView from "./views/SettingsView.jsx";
+const SettingsView = lazy(() => import("./views/SettingsView.jsx"));
+// import AdminView from "./views/AdminView.jsx";
+const AdminView = lazy(() => import("./views/AdminView.jsx"));
 import { createHashRouter, RouterProvider, Outlet } from "react-router-dom";
 import GlobalContext from "./GlobalContext";
 import ProtectedRoute from "./ProtectedRoute.jsx";
@@ -27,7 +32,9 @@ const router = createHashRouter([
 				path: "schedule",
 				element: (
 					<ProtectedRoute>
-						<ScheduleView />
+						<Suspense fallback={<>Laddar...</>}>
+							<ScheduleView />
+						</Suspense>
 					</ProtectedRoute>
 				),
 			},
@@ -72,7 +79,7 @@ export default function App() {
 	return (
 		<GlobalContext.Provider value={{ loggedInUserId, setLoggedInUserId, users, setUsers }}>
 			<ToastContainer
-				position="top-right"
+				position="bottom-left"
 				autoClose={3000}
 				hideProgressBar={false}
 				newestOnTop={false}

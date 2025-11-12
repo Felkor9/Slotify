@@ -1,5 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import "./SettingsComponent.css";
+import { useNavigate } from "react-router-dom";
 import GlobalContext from "../GlobalContext";
 import { toast } from "react-toastify";
 
@@ -9,18 +10,18 @@ function SettingsComponent() {
 	const [password, setPassword] = useState("");
 	const [currentPassword, setCurrentPassword] = useState("");
 	const [isUpdateVisible, setUpdateVisible] = useState(false);
-
-	const { users } = useContext(GlobalContext); // Lista på användare
-	const { loggedInUserId } = useContext(GlobalContext); // Inloggad användarens ID
-	const [user, setUser] = useState(null); // State för den aktuella användaren
+	const { users } = useContext(GlobalContext);
+	const { loggedInUserId, setLoggedInUserId } = useContext(GlobalContext);
+	const [user, setUser] = useState(null);
+	const navigate = useNavigate();
 
 	useEffect(() => {
-		console.log("Users:", users); // Se om users är tillgänglig
-		console.log("Logged In User ID:", loggedInUserId); // Se om den inloggade användarens ID är korrekt
+		console.log("Users:", users);
+		console.log("Logged In User ID:", loggedInUserId);
 
 		if (users && loggedInUserId) {
 			const foundUser = users.find((u) => u.id === Number(loggedInUserId));
-			console.log("Found user:", foundUser); // Här ser du om användaren hittas korrekt
+			console.log("Found user:", foundUser);
 
 			if (foundUser) {
 				setUser(foundUser);
@@ -33,11 +34,10 @@ function SettingsComponent() {
 			toast.error("Please fill in all fields.");
 			return;
 		}
-		setUpdateVisible(true); // Visa modalen för att bekräfta uppdatering
+		setUpdateVisible(true);
 	};
 
 	const handleUpdate = () => {
-		// Kontrollera att användaren finns
 		if (!users || !user.id) {
 			toast.error("User data is not available.");
 			return;
@@ -60,9 +60,9 @@ function SettingsComponent() {
 			})
 			.then((data) => {
 				console.log("Success:", data);
-				setUpdateVisible(false); // Stäng modalen
+				setUpdateVisible(false);
 				toast.success("User information updated successfully!");
-				setUser(data.user); // Uppdatera användaren i state
+				setUser(data.user);
 			})
 			.catch((error) => {
 				console.error("Error:", error);
@@ -70,11 +70,39 @@ function SettingsComponent() {
 			});
 	};
 
+	const deleteUser = async () => {
+		try {
+			console.log("Deleting user with id:", user.id);
+
+			const res = await fetch(`/api/deleteuser`, {
+				method: "DELETE",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ id: user.id }),
+			});
+
+			if (!res.ok) {
+				toast.error("Kunde inte ta bort användaren");
+				throw new Error("Delete failed");
+			}
+
+			localStorage.removeItem("loggedInUserId");
+			setLoggedInUserId(null);
+			toast.success("Användare raderad!");
+			navigate("/");
+		} catch (err) {
+			console.error(err.message);
+			toast.error("Ett fel uppstod");
+		}
+	};
+
 	return (
 		<>
 			<div className="settings-container">
 				<div className="form-div-settings">
 					<h1>Update your user-info</h1>
+					<button className="delete-btn" onClick={() => deleteUser(loggedInUserId)}>
+						Delete account
+					</button>
 					<div className="form-div-holder">
 						<div className="current-info">
 							<h2 className="heading-info">Current information </h2>

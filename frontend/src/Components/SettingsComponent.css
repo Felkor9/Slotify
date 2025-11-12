@@ -8,6 +8,18 @@
 	padding: 30px;
 	font-family: "Roboto", sans-serif; /* Ett mer modernt typsnitt */
 }
+.delete-btn {
+	padding: 10px;
+	background-color: rgb(167, 7, 7);
+	border-radius: 10px;
+	border: none;
+	color: white;
+	transition: ease-out 1ms;
+}
+.delete-btn:hover {
+	transform: scale(1.05);
+	background-color: rgb(88, 2, 2);
+}
 
 /* Formulärbehållare */
 .form-div-settings {
