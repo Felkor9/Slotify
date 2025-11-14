@@ -106,12 +106,9 @@ function CreateUserComponent() {
 							Agree terms of use and handling of GDPR{" "}
 						</div>
 						<div className="terms-div">
-							<p>
-								By creating an account, you agree to the{" "}
-								<a onClick={() => setIsTermsVisible(true)} className="terms-link">
-									Terms of Service.
-								</a>{" "}
-							</p>
+							<a onClick={() => setIsTermsVisible(true)} className="terms-link">
+								Terms of Service.
+							</a>{" "}
 						</div>
 
 						<button className="create-btn" onClick={addUser} type="submit">
