@@ -271,6 +271,7 @@ app.delete("/api/deleteuser", async (req, res) => {
 		if (!id) {
 			return res.status(400).json({ error: "Något gick fel — inget ID angivet" });
 		}
+		await client.query(`DELETE FROM bookings WHERE user_id = $1 RETURNING *`, [id]);
 
 		const result = await client.query(`DELETE FROM "user" WHERE id = $1 RETURNING *`, [id]);
 
