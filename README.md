@@ -2,7 +2,7 @@
 
 - [x] Applikationen ska ha ett frontend, ett backend och en databas.
 - [x] Alla kodändringar måste föras in på main-branch:en minst en gång per “arbetsdag”. Detta kallas Continous Integration.
-- [ ] Alla måste individuellt publicera applikationen på sin egen server och dokumentera sin insats i rapporten.
+- [x] Alla måste individuellt publicera applikationen på sin egen server och dokumentera sin insats i rapporten.
 - [x] Applikationen ska publiceras med Docker Compose. Ni kan samarbeta med att skapa Docker Compose-konfigurationen. Minst två services måste specificeras i compose.yaml. Frontend- och backend-delarna kan ingå i samma service men databasen måste vara en separat service. Tjänsterna kan startas med docker compose up -d. (-d-växeln kan ha betydelse eftersom tjänsterna annars kan stängas av när SSH-sessionen avslutas.)
 - [ ] Alla måste delta i att förbättra prestandan i projektet och dokumentera sin insats i rapporten. För exempel på prestandaförbättringar, se modulen Några webboptimeringar.
 - [x] Alla måste delta i attin insat göra projektet GDPR-kompatibelt och dokumentera ss i rapporten. För mer information om GDPR, se modulen GDPR och datasäkerhet.
@@ -13,7 +13,7 @@
 - [ ] Ge användarna möjligheten att komma åt, ändra och radera sina personuppgifter.
 - [x] Alla måste bidra till det GDPR-relaterade arbetet och dokumenterar i sin insats i rapporten.
 - [x] Databasen ska finnas kvar, och applikationen ska fortsätta fungera, även om docker compose down följt av docker compose up körs. För att uppnå detta kan databasens filer (/var/lib/postgresql/data i PostgreSQL-tjänsten) placeras på värdystemet (utanför Docker) med en volumes-deklaration. Detta förhindrar att databastabeller försvinner när docker compose down körs. Om PostgreSQL används och databastjänsten heter “database” går databasen att komma åt via docker compose exec database psql --username=postgres. (När PostgreSQL-tjänsten körs lokalt på en dator (alltså inte på en server), och Git Bash på Windows används, behöver winpty docker compose exec database psql --username=postgres användas.)
-- [ ] Omfattningen på projektet ska vara tillräckligt stor utifrån att projektet pågår i ungefär tre veckor.
+- [x] Omfattningen på projektet ska vara tillräckligt stor utifrån att projektet pågår i ungefär tre veckor.
 
 ## VG
 
